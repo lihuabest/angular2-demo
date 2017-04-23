@@ -1,11 +1,11 @@
 /**
  * Created by Administrator on 2017/4/13.
  */
-import {Routes, RouterModule} from "@angular/router";
+import {Routes, RouterModule} from '@angular/router';
 
-import {NgModule} from "@angular/core";
-import {MainComponent} from "./components/main/main.component";
-import {LoginComponent} from "./components/login/login.component";
+import {NgModule} from '@angular/core';
+import {MainComponent} from './components/main/main.component';
+import {LoginComponent} from './components/login/login.component';
 
 export const routes: Routes = [
   {

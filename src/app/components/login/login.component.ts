@@ -1,10 +1,10 @@
-import {Component} from "@angular/core";
+import {Component} from '@angular/core';
 /**
  * Created by Administrator on 2017/4/13.
  */
 
 @Component({
-    selector: 'login-component',
+    selector: 'app-login-component',
     templateUrl: 'login.component.html',
     styleUrls: ['login.component.scss']
 })

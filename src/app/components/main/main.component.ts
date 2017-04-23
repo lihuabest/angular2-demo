@@ -1,10 +1,10 @@
-import {Component} from "@angular/core";
+import {Component} from '@angular/core';
 /**
  * Created by Administrator on 2017/4/13.
  */
 
 @Component({
-    selector: 'main-component',
+    selector: 'app-main-component',
     templateUrl: './main.component.html',
     styleUrls: ['./main.component.scss']
 })

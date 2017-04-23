@@ -1,5 +1,5 @@
-import {NgModule} from "@angular/core";
-import {MainComponent} from "./main.component";
+import {NgModule} from '@angular/core';
+import {MainComponent} from './main.component';
 /**
  * Created by Administrator on 2017/4/13.
  */
