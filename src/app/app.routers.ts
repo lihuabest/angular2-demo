@@ -6,6 +6,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {MainComponent} from './components/main/main.component';
 import {LoginComponent} from './components/login/login.component';
+import {MainGuard} from "./components/main/main.guard";
 
 export const routes: Routes = [
   {
@@ -17,22 +18,22 @@ export const routes: Routes = [
     component: LoginComponent,
     pathMatch: 'full'
   },
-  // {
-  //   path: 'main',
-  //   component: MainComponent,
-  //   canActivate: [],
-  //   children: [
-  //     {
-  //       path: '',
-  //       redirectTo: 'form',
-  //       pathMatch: 'full'
-  //     }, {
-  //       path: 'form',
-  //       loadChildren: 'app/',
-  //       pathMatch: 'full',
-  //     }
-  //   ]
-  // }
+  {
+    path: 'main',
+    component: MainComponent,
+    canActivate: [MainGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'form',
+        pathMatch: 'full'
+      }, {
+        path: 'form',
+        loadChildren: 'app/module/form/form.module#FormModule',
+        pathMatch: 'full',
+      }
+    ]
+  }
 ];
 
 @NgModule({

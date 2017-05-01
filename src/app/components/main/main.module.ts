@@ -1,13 +1,20 @@
 import {NgModule} from '@angular/core';
 import {MainComponent} from './main.component';
+import {RouterModule} from "@angular/router";
 /**
  * Created by Administrator on 2017/4/13.
  */
 
 @NgModule({
-    imports: [],
-    declarations: [MainComponent],
-    exports: [MainComponent],
+    imports: [
+      RouterModule
+    ],
+    declarations: [
+      MainComponent
+    ],
+    exports: [
+      MainComponent
+    ],
     providers: []
 })
 
