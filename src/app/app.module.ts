@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import {AppRoutesModule} from "./app.routers";
 import {LoginModule} from "./components/login/login.module";
 import {MainModule} from "./components/main/main.module";
+import {LoginService} from "./services/login.service";
 
 @NgModule({
   declarations: [
