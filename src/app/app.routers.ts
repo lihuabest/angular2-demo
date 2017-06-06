@@ -30,7 +30,9 @@ export const routes: Routes = [
       }, {
         path: 'form',
         loadChildren: 'app/module/form/form.module#FormModule',
-        pathMatch: 'full',
+      }, {
+        path: 'dynamic',
+        loadChildren: 'app/module/dynamic/dynamic.module#DynamicModule',
       }
     ]
   }
