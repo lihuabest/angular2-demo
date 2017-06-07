@@ -1,0 +1,18 @@
+.wrapper {
+  color: #fff;
+  .container {
+    width: 500px;
+    padding: 20px;
+    &:first-child {
+      background: rgba(0, 0, 0, 0.3);
+    }
+    &:last-child {
+      background: rgba(0, 0, 0, 0.6);
+    }
+    div {
+      padding: 5px;
+      background: #E74C3C;
+      margin-bottom: 5px;
+    }
+  }
+}
