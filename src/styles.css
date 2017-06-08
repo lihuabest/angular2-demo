@@ -1,3 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "../node_modules/dragula/dist/dragula.css";
+
+.ex-moved {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 5px;
+}
+.ex-over {
+    color: blue;
+    background: rgba(255, 255, 255, 0.3);
+}
