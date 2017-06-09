@@ -8,21 +8,31 @@ import { AppComponent } from './app.component';
 import {AppRoutesModule} from "./app.routers";
 import {LoginModule} from "./components/login/login.module";
 import {MainModule} from "./components/main/main.module";
+import {UiService} from "./services/ui/ui.service";
+import {UiConfirmDialogComponent} from "./services/ui/components/confirm/ui.confirm.dialog.component";
+import {DataTransferService} from "./services/data.transfer.service";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpModule,
-    AppRoutesModule,
-    LoginModule,
-    MainModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        UiConfirmDialogComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpModule,
+        AppRoutesModule,
+        LoginModule,
+        MainModule
+    ],
+    providers: [
+        UiService,
+        DataTransferService
+    ],
+    bootstrap: [
+        AppComponent,
+        UiConfirmDialogComponent
+    ]
 })
 export class AppModule { }

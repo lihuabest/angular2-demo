@@ -1,0 +1,37 @@
+<h2>ng2-dragula</h2>
+
+<div>
+    <a href="https://github.com/valor-software/ng2-dragula" target="_blank">ng2-dragula 地址</a>
+</div>
+
+<div>
+    <div class="wrapper">
+        <div class="container" [dragula]="'first-bag'">
+            <div>You can move these elements between these two containers</div>
+            <div>Moving them anywhere else isn"t quite possible</div>
+            <div>There"s also the possibility of moving elements around in the same container, changing their position</div>
+        </div>
+        <div class="container" [dragula]="'first-bag'">
+            <div>This is the default use case. You only need to specify the containers you want to use</div>
+            <div>More interactive use cases lie ahead</div>
+            <div>Make sure to check out the <a href="https://github.com/bevacqua/dragula#readme">documentation on GitHub!</a></div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="wrapper">
+    <div class="container" [dragula]="'another-bag'" [dragulaModel]="many">
+        <div *ngFor="let text of many" [innerHtml]="text"></div>
+    </div>
+    <div class="container" [dragula]="'another-bag'" [dragulaModel]="many2">
+        <div *ngFor="let text of many2" [innerHtml]="text"></div>
+    </div>
+</div>
+<div class="wrapper">
+    <div class="container">
+        <pre>{{many | json}}</pre>
+    </div>
+    <div class="container">
+        <pre>{{many2 | json}}</pre>
+    </div>
+</div>

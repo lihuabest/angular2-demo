@@ -1,0 +1,10 @@
+<div class="confirm-container" *ngIf="show">
+    <div class="content">
+        <div>{{title}}</div>
+        <div>{{content}}</div>
+        <div>
+            <button (click)="ok()">确定</button>
+            <button (click)="cancel()">取消</button>
+        </div>
+    </div>
+</div>

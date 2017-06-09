@@ -1,14 +1,17 @@
 <div>view</div>
 <div>
-  <ul>
-    <li>
-      <a href="javascript:;" (click)="setDynamic('sky')">sky</a>
-    </li>
-    <li>
-      <a href="javascript:;" (click)="setDynamic('ocean')">ocean</a>
-    </li>
-  </ul>
+    <ul>
+        <li>
+            <a href="javascript:;" (click)="setDynamic('sky')">sky</a>
+        </li>
+        <li>
+            <a href="javascript:;" (click)="setDynamic('ocean')">ocean</a>
+        </li>
+        <li>
+            <a routerLink="/login" routerLinkActive="active">go login</a>
+        </li>
+    </ul>
 </div>
 <div class="dynamic-container">
-  <ng-template #dynamicHost></ng-template>
+    <ng-template #dynamicHost></ng-template>
 </div>
