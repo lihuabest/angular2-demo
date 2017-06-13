@@ -11,6 +11,9 @@ import {MainModule} from "./components/main/main.module";
 import {UiService} from "./services/ui/ui.service";
 import {UiConfirmDialogComponent} from "./services/ui/components/confirm/ui.confirm.dialog.component";
 import {DataTransferService} from "./services/data.transfer.service";
+import {MdDialogModule} from "@angular/material";
+import {AppDialogComponent} from "./services/dialog/dialog.component";
+import {ModalModule} from "./services/modal/modal.module";
 
 @NgModule({
     declarations: [
@@ -24,7 +27,9 @@ import {DataTransferService} from "./services/data.transfer.service";
         HttpModule,
         AppRoutesModule,
         LoginModule,
-        MainModule
+        MainModule,
+        MdDialogModule,
+        ModalModule
     ],
     providers: [
         UiService,
@@ -33,6 +38,7 @@ import {DataTransferService} from "./services/data.transfer.service";
     bootstrap: [
         AppComponent,
         UiConfirmDialogComponent
-    ]
+    ],
+    entryComponents: []
 })
 export class AppModule { }

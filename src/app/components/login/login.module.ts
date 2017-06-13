@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {LoginComponent} from "./login.component";
 import {RouterModule} from "@angular/router";
 import {BrowserModule} from "@angular/platform-browser";
+import {AppDialogComponent} from "../../services/dialog/dialog.component";
 /**
  * Created by Administrator on 2017/4/13.
  */
@@ -11,9 +12,13 @@ import {BrowserModule} from "@angular/platform-browser";
       BrowserModule,
       RouterModule,
     ],
-    declarations: [LoginComponent],
+    declarations: [
+        LoginComponent,
+        AppDialogComponent
+    ],
     exports: [LoginComponent],
-    providers: []
+    providers: [],
+    entryComponents: [AppDialogComponent]
 })
 
 export class LoginModule {}

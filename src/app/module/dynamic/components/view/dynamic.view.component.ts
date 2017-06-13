@@ -1,6 +1,7 @@
 import {Component, ComponentFactoryResolver, ComponentRef, OnDestroy, ViewChild, ViewContainerRef} from "@angular/core";
 import {DynamicTypeService} from "../../../../services/dynamic.type.service";
 import {UiService} from "../../../../services/ui/ui.service";
+import {AppDynamicSkyComponent} from "../sky/dynamic.sky.component";
 /**
  * Created by Administrator on 2017/6/6.
  */
@@ -25,13 +26,15 @@ export class AppDynamicViewComponent implements OnDestroy {
     ) {}
 
     ngOnDestroy() {
-        this.dynamicHostRef && this.dynamicHostRef.destroy();
+        if (this.dynamicHostRef) {
+            this.dynamicHostRef.destroy();
+        }
     }
 
     // 动态切换子组件
     setDynamic(type: string) {
         const dynamicTypeComponent = this.dynamicTypeService.getType(type);
-        if(dynamicTypeComponent) {
+        if (dynamicTypeComponent) {
               this.dynamicHost.clear();
 
               const componentFactory = this.componentFactoryResolver.resolveComponentFactory(dynamicTypeComponent);
@@ -48,6 +51,11 @@ export class AppDynamicViewComponent implements OnDestroy {
                  }, 100);
              });
         });
+    }
+
+
+    showMdDialog() {
+
     }
 
 }
