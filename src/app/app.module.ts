@@ -1,10 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {AppRoutesModule} from "./app.routers";
 import {LoginModule} from "./components/login/login.module";
 import {MainModule} from "./components/main/main.module";
@@ -12,8 +12,7 @@ import {UiService} from "./services/ui/ui.service";
 import {UiConfirmDialogComponent} from "./services/ui/components/confirm/ui.confirm.dialog.component";
 import {DataTransferService} from "./services/data.transfer.service";
 import {MdDialogModule} from "@angular/material";
-import {AppDialogComponent} from "./services/dialog/dialog.component";
-import {ModalModule} from "./services/modal/modal.module";
+import {ModalService} from "./services/modal/modal.module";
 
 @NgModule({
     declarations: [
@@ -28,12 +27,12 @@ import {ModalModule} from "./services/modal/modal.module";
         AppRoutesModule,
         LoginModule,
         MainModule,
-        MdDialogModule,
-        ModalModule
+        MdDialogModule
     ],
     providers: [
         UiService,
-        DataTransferService
+        DataTransferService,
+        ModalService
     ],
     bootstrap: [
         AppComponent,

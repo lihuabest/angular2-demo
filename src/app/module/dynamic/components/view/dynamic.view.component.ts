@@ -2,6 +2,8 @@ import {Component, ComponentFactoryResolver, ComponentRef, OnDestroy, ViewChild,
 import {DynamicTypeService} from "../../../../services/dynamic.type.service";
 import {UiService} from "../../../../services/ui/ui.service";
 import {AppDynamicSkyComponent} from "../sky/dynamic.sky.component";
+import {ModalService} from "../../../../services/modal/modal.module";
+import {AppDialogComponent} from "../../../../services/dialog/dialog.component";
 /**
  * Created by Administrator on 2017/6/6.
  */
@@ -22,7 +24,8 @@ export class AppDynamicViewComponent implements OnDestroy {
     constructor(
         private dynamicTypeService: DynamicTypeService,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private uiService: UiService
+        private uiService: UiService,
+        private modalService: ModalService
     ) {}
 
     ngOnDestroy() {
@@ -53,9 +56,12 @@ export class AppDynamicViewComponent implements OnDestroy {
         });
     }
 
-
     showMdDialog() {
-
+        // let ref = this.modalService.open(AppDialogComponent);
+        //
+        // setTimeout(() => {
+        //     ref.destroy();
+        // }, 3000);
     }
 
 }
