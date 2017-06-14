@@ -3,57 +3,11 @@
  */
 
 import {
-    ApplicationRef,
-    Compiler, Component, ComponentFactoryResolver, ComponentRef, ElementRef, Injectable, Injector, NgModule, OnDestroy,
+    ApplicationRef, Component, ComponentFactoryResolver, Injectable, NgModule,
     OnInit,
-    ReflectiveInjector, Renderer2, TemplateRef,
     ViewChild,
-    ViewContainerRef, ViewRef
+    ViewContainerRef
 } from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
-import {Subject} from "rxjs/Subject";
-
-export class ContentRef {
-    constructor(public nodes: any[], public viewRef?: ViewRef, public componentRef?: ComponentRef<any>) {}
-}
-
-@Component({
-    selector: 'app-model-window',
-    template: `
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <ng-content></ng-content>
-            </div>
-        </div>
-    `
-})
-export class ModalWindow implements OnInit, OnDestroy {
-
-    constructor(private elementRef: ElementRef, private renderer: Renderer2) {
-
-    }
-
-    ngOnInit() {
-        this.renderer.addClass(document.body, 'modal-open');
-    }
-
-    ngOnDestroy() {
-        this.renderer.removeClass(document.body, 'modal-open');
-    }
-
-}
-
-@Injectable()
-export class ActiveModal {
-    close(result?: any): void {}
-
-    dismiss(result?: any): void {}
-}
-
-@Injectable()
-export class ModalRef {
-
-}
 
 export interface ModalOptions {
     /**
@@ -69,133 +23,107 @@ export interface ModalOptions {
 
 @Injectable()
 export class ModalService {
-    private viewContainerRef: ViewContainerRef;
-    private dataTransfer: ModalDataTransfer;
 
-    // 动态子组件引用
-    componnetInstanceRef: any;
+    private contentRef;           // 模态组件在根组件里的引用
+    private contentComponent;     // 模态组件
+    private contentInstance;　　　 // 模态组件实例
 
-    constructor(private compiler: Compiler,
-                private componentFactoryResolver: ComponentFactoryResolver,
-                private applicationRef: ApplicationRef,
-                private injector: Injector) {
+    private modalComponentRef; 　　// 根组件引用
 
+    constructor(private _applicationRef: ApplicationRef,
+                private _componentFactoryResolver: ComponentFactoryResolver) {}
+
+    open(content: any, options: ModalOptions = {}) {
+
+        // 第一次执行的时候初始化根组件
+        this.modalComponentRef = this.getModalComponent();
+
+        // 动态初始化模态组件
+        const contentFactory = this._componentFactoryResolver.resolveComponentFactory(content);
+        this.contentComponent = this.contentRef.createComponent(contentFactory);
+        this.contentInstance = this.contentComponent.instance;
+
+        // 绑定一个destroy给外部调用 删除模态组件
+        this.contentInstance['destroy'] = () => {
+            this.contentComponent.destroy();
+            this.modalComponentRef.destroy();
+
+            this.contentRef = null;
+            this.contentComponent = null;
+            this.contentInstance = null;
+            this.modalComponentRef = null;
+        };
+
+        return this.contentInstance;
     }
 
-    open<T>(componnet: any, params: ModalOptions = {}): ComponentRef<T> {
+    // 获取根组件
+    getModalComponent() {
+        // 初始化根组件
+        let modalComponentFactory = this._componentFactoryResolver.resolveComponentFactory(ModalComponent);
+        // 插入根组件的dom
+        document.body.insertBefore(document.createElement(modalComponentFactory.selector), document.body.firstChild);
 
-        const containerSelector = params.container || 'body';
-        const containerEl = document.querySelector(containerSelector);
-
-        const activeModal = new ActiveModal();
-        const contentRef = this._getContentRef(this.componentFactoryResolver, this.injector, componnet, activeModal);
-
-        let modalWindowRef: ComponentRef<ModalWindow>;
-
-
-        return this.componnetInstanceRef;
+        // 最重要的这里 把组件插入到根应用
+        return this._applicationRef.bootstrap(modalComponentFactory);
     }
 
-    private _getContentRef(moduleCFR: ComponentFactoryResolver, contentInjector: Injector, content: any, context: ActiveModal) {
-        if(content instanceof TemplateRef) {
-            const viewRef = content.createEmbeddedView(context);
-            this.applicationRef.attachView(viewRef);
-            return new ContentRef([viewRef.rootNodes], viewRef);
-        } else if(typeof content === 'string') {
-            return new ContentRef([[document.createTextNode(`${{content}}`)]]);
-        } else {
-            const contentCmptFactory = moduleCFR.resolveComponentFactory(content);
-            const modalContentInjector = ReflectiveInjector.resolveAndCreate([{provide: ActiveModal, useValue: context}], contentInjector);
-            const componentRef = contentCmptFactory.create(modalContentInjector);
-            this.applicationRef.attachView(componentRef.hostView);
-            return new ContentRef([[componentRef.location.nativeElement]], componentRef.hostView, componentRef);
+    setContentRef(ref) {
+        this.contentRef = ref;
+    }
+}
+
+@Component({
+    selector: 'app-modal-component',
+    template: `
+        <div class="app-modal-container">
+            <div class="app-modal-overlay"></div>
+            <div class="app-modal-content">
+                <ng-template #content></ng-template>
+            </div>
+        </div>
+    `,
+    styles: [`
+        .app-modal-container {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
         }
+        .app-modal-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0.3;
+        }
+        .app-modal-content {
+            min-width: 100px;
+            min-height: 100px;
+            padding: 15px;
+            background: #fff;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    `]
+})
+export class ModalComponent implements OnInit {
+
+    @ViewChild('content', {read: ViewContainerRef}) contentRef;
+
+    constructor(private _modalService: ModalService) {}
+
+    ngOnInit() {
+        this._modalService.setContentRef(this.contentRef);
     }
 }
 
-@Injectable()
-export class ModalDataTransfer {
-
-    showDialog: Subject<boolean> = new Subject<boolean>();
-
-}
-
-// @Component({
-//     selector: 'app-modal-placehoder',
-//     template: `
-//         <div class="modal-container" [class.hidden]="!isShowModal">
-//             <div class="modal-container-overlay"></div>
-//             <div class="modal-container-content">
-//                 <ng-template #modalplaceholder></ng-template>
-//             </div>
-//         </div>
-//     `,
-//     styles: [`
-//         .modal-container {
-//             position: fixed;
-//             width: 100%;
-//             height: 100%;
-//             left: 0;
-//             top: 0;
-//         }
-//         .modal-container.hidden {
-//             display: none;
-//         }
-//         .modal-container-overlay {
-//             position: absolute;
-//             width: 100%;
-//             height: 100%;
-//             background-color: #000;
-//             opacity: 0.5;
-//         }
-//         .modal-container-content {
-//             padding: 10px;
-//             background: #fff;
-//             width: 100px;
-//             height: 100px;
-//             position: absolute;
-//             left: 50%;
-//             top: 50%;
-//             transform: translate(-50%, -50%);
-//         }
-//     `]
-// })
-// export class ModalPlaceholderComponent implements OnInit {
-//
-//     isShowModal: boolean = false;
-//
-//     @ViewChild('modalplaceholder', {read: ViewContainerRef}) viewContainerRef;
-//
-//     constructor(private modalService: ModalService,
-//                 private injector: Injector,
-//                 private modalDataTransfer: ModalDataTransfer) {
-//
-//         this.modalDataTransfer.showDialog.subscribe(data => this.isShowModal = data);
-//
-//     }
-//
-//     ngOnInit(): void {
-//         this.modalService.registerViewContainerRef(this.viewContainerRef);
-//         this.modalService.registerInjector(this.injector);
-//         this.modalService.registerDataTransfer(this.modalDataTransfer);
-//     }
-// }
-
-
-// @NgModule({
-//     imports: [
-//         BrowserModule
-//     ],
-//     declarations: [ModalPlaceholderComponent],
-//     exports: [ModalPlaceholderComponent],
-//     providers: [
-//         ModalService,
-//         ModalDataTransfer
-//     ]
-// })
-// export class ModalModule {
-//
-//     constructor() {
-//
-//     }
-// }
+@NgModule({
+    declarations: [ModalComponent],
+    providers: [ModalService],
+    entryComponents: [ModalComponent]
+})
+export class ModalModule {}

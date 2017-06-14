@@ -56,12 +56,16 @@ export class AppDynamicViewComponent implements OnDestroy {
         });
     }
 
-    showMdDialog() {
-        // let ref = this.modalService.open(AppDialogComponent);
-        //
-        // setTimeout(() => {
-        //     ref.destroy();
-        // }, 3000);
+    showMdDialog($event: any) {
+
+        let ref = this.modalService.open(AppDialogComponent);
+
+        ref.modalClick = () => {
+            console.log('model click');
+            ref.destroy();
+        };
+
+        $event.preventDefault();
     }
 
 }

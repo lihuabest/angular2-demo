@@ -12,7 +12,7 @@ import {UiService} from "./services/ui/ui.service";
 import {UiConfirmDialogComponent} from "./services/ui/components/confirm/ui.confirm.dialog.component";
 import {DataTransferService} from "./services/data.transfer.service";
 import {MdDialogModule} from "@angular/material";
-import {ModalService} from "./services/modal/modal.module";
+import {ModalModule} from "./services/modal/modal.module";
 
 @NgModule({
     declarations: [
@@ -27,12 +27,12 @@ import {ModalService} from "./services/modal/modal.module";
         AppRoutesModule,
         LoginModule,
         MainModule,
-        MdDialogModule
+        MdDialogModule,
+        ModalModule
     ],
     providers: [
         UiService,
-        DataTransferService,
-        ModalService
+        DataTransferService
     ],
     bootstrap: [
         AppComponent,
