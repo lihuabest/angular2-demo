@@ -12,7 +12,17 @@
         </li>
     </ul>
 </div>
-<a href="javascript:;" (click)="showMdDialog($event)">dialog test</a>
+
+<div>
+    <a href="javascript:;" (click)="showMdDialog($event)">Angular Material Dialog test</a>
+    <a href="javascript:;" (click)="showCustomerDialog($event)">Customer Dialog Test</a>
+</div>
+
+<div>
+    <button [@flyInOut]="isShowAnimate"
+            (click)="isShowAnimate=!isShowAnimate"
+            *ngIf="isShowAnimate">animation</button>
+</div>
 
 <div class="dynamic-container">
     <ng-template #dynamicHost></ng-template>

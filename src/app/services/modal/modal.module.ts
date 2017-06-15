@@ -9,6 +9,7 @@ import {
     ViewContainerRef
 } from "@angular/core";
 import {animate, state, style, trigger, transition} from "@angular/animations";
+import {CommonModule} from "@angular/common";
 
 export interface ModalOptions {
     /**
@@ -71,10 +72,14 @@ export class ModalService {
 
         // 绑定一个destroy给外部调用 删除模态组件
         this.contentInstance['destroy'] = () => {
-            this.contentComponent.destroy();
-            this.modalComponentRef.destroy();
+            this.modalComponentInstance.isShow = false;
 
-            this.clear();
+            setTimeout(() => {
+                this.contentComponent.destroy();
+                this.modalComponentRef.destroy();
+
+                this.clear();
+            }, 200);
         };
     }
 
@@ -91,7 +96,7 @@ export class ModalService {
 @Component({
     selector: 'app-modal-component',
     template: `
-        <div class="app-modal-container" [@showState]="isShow">
+        <div class="app-modal-container" [@fadeInOut] *ngIf="isShow">
             <div class="app-modal-overlay"></div>
             <div class="app-modal-content">
                 <ng-template #content></ng-template>
@@ -111,7 +116,7 @@ export class ModalService {
             width: 100%;
             height: 100%;
             background-color: #000;
-            opacity: 0.6;
+            opacity: 0.5;
         }
         .app-modal-content {
             min-width: 100px;
@@ -125,22 +130,22 @@ export class ModalService {
         }
     `],
     animations: [
-        trigger('showState', [
-            state('inactive', style({
-                opacity: 0
-            })),
-            state('active', style({
-                opacity: 0.6
-            })),
-            transition('inactive => active', animate('100ms ease-in')),
-            transition('active => inactive', animate('100ms ease-out'))
+        trigger('fadeInOut', [
+            state('in', style({opacity: '0.5'})),
+            transition('void => *', [
+                style({opacity: '0.5'}),
+                animate(100)
+            ]),
+            transition('* => void', [
+                animate(100, style({opacity: '0'}))
+            ])
         ])
     ]
 })
 export class ModalComponent {
 
     // 控制动画显示 目前没调试好
-    isShow: boolean = false;
+    isShow: boolean = true;
 
     @ViewChild('content', {read: ViewContainerRef}) contentRef;
 
@@ -151,7 +156,7 @@ export class ModalComponent {
 }
 
 @NgModule({
-    imports: [],
+    imports: [CommonModule],
     declarations: [ModalComponent],
     providers: [ModalService],
     entryComponents: [ModalComponent]

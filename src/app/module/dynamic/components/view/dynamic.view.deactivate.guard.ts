@@ -11,6 +11,6 @@ export class DynamicViewDeactivateGuard implements CanDeactivate<AppDynamicViewC
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ) {
-        return await component.showComfirm();
+        return await component.showConfirm();
     }
 }
