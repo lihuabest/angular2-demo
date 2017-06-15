@@ -8,6 +8,7 @@ import {
     ViewChild,
     ViewContainerRef
 } from "@angular/core";
+import {animate, state, style, trigger, transition} from "@angular/animations";
 
 export interface ModalOptions {
     /**
@@ -24,21 +25,46 @@ export interface ModalOptions {
 @Injectable()
 export class ModalService {
 
-    private contentRef;           // 模态组件在根组件里的引用
-    private contentComponent;     // 模态组件
-    private contentInstance;　　　 // 模态组件实例
+    private contentRef;             // 模态组件在根组件里的引用
+    private contentComponent;       // 模态组件
+    private contentInstance;　　　   // 模态组件实例
 
-    private modalComponentRef; 　　// 根组件引用
+    private modalComponentRef; 　　  // 根组件引用
+    private modalComponentInstance; // 根组件实例引用
 
     constructor(private _applicationRef: ApplicationRef,
                 private _componentFactoryResolver: ComponentFactoryResolver) {}
 
     open(content: any, options: ModalOptions = {}) {
 
-        // 第一次执行的时候初始化根组件
-        this.modalComponentRef = this.getModalComponent();
+        // 初始化根组件
+        this.initModalComponentInstance();
 
-        // 动态初始化模态组件
+        // 初始化内容组件
+        this.initContentInstance(content);
+
+        return this.contentInstance;
+    }
+
+    // 初始化根组件实例
+    initModalComponentInstance() {
+        // 初始化根组件
+        let modalComponentFactory = this._componentFactoryResolver.resolveComponentFactory(ModalComponent);
+        // 插入根组件的dom
+        document.body.insertBefore(document.createElement(modalComponentFactory.selector), document.body.firstChild);
+
+        // 最重要的这里 把组件插入到根应用
+        this.modalComponentRef = this._applicationRef.bootstrap(modalComponentFactory);
+        // 获取实例
+        this.modalComponentInstance = this.modalComponentRef.instance;
+
+        this.modalComponentInstance.isShow = true;
+        this.contentRef = this.modalComponentInstance.contentRef;
+    }
+
+    // 动态初始化模态组件
+    initContentInstance(content: any) {
+
         const contentFactory = this._componentFactoryResolver.resolveComponentFactory(content);
         this.contentComponent = this.contentRef.createComponent(contentFactory);
         this.contentInstance = this.contentComponent.instance;
@@ -48,35 +74,24 @@ export class ModalService {
             this.contentComponent.destroy();
             this.modalComponentRef.destroy();
 
-            this.contentRef = null;
-            this.contentComponent = null;
-            this.contentInstance = null;
-            this.modalComponentRef = null;
+            this.clear();
         };
-
-        return this.contentInstance;
     }
 
-    // 获取根组件
-    getModalComponent() {
-        // 初始化根组件
-        let modalComponentFactory = this._componentFactoryResolver.resolveComponentFactory(ModalComponent);
-        // 插入根组件的dom
-        document.body.insertBefore(document.createElement(modalComponentFactory.selector), document.body.firstChild);
-
-        // 最重要的这里 把组件插入到根应用
-        return this._applicationRef.bootstrap(modalComponentFactory);
-    }
-
-    setContentRef(ref) {
-        this.contentRef = ref;
+    // 清除各种引用
+    private clear() {
+        this.contentRef = null;
+        this.contentComponent = null;
+        this.contentInstance = null;
+        this.modalComponentInstance = null;
+        this.modalComponentRef = null;
     }
 }
 
 @Component({
     selector: 'app-modal-component',
     template: `
-        <div class="app-modal-container">
+        <div class="app-modal-container" [@showState]="isShow">
             <div class="app-modal-overlay"></div>
             <div class="app-modal-content">
                 <ng-template #content></ng-template>
@@ -96,7 +111,7 @@ export class ModalService {
             width: 100%;
             height: 100%;
             background-color: #000;
-            opacity: 0.3;
+            opacity: 0.6;
         }
         .app-modal-content {
             min-width: 100px;
@@ -108,20 +123,35 @@ export class ModalService {
             top: 50%;
             transform: translate(-50%, -50%);
         }
-    `]
+    `],
+    animations: [
+        trigger('showState', [
+            state('inactive', style({
+                opacity: 0
+            })),
+            state('active', style({
+                opacity: 0.6
+            })),
+            transition('inactive => active', animate('100ms ease-in')),
+            transition('active => inactive', animate('100ms ease-out'))
+        ])
+    ]
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent {
+
+    // 控制动画显示 目前没调试好
+    isShow: boolean = false;
 
     @ViewChild('content', {read: ViewContainerRef}) contentRef;
 
-    constructor(private _modalService: ModalService) {}
+    constructor() {
 
-    ngOnInit() {
-        this._modalService.setContentRef(this.contentRef);
     }
+
 }
 
 @NgModule({
+    imports: [],
     declarations: [ModalComponent],
     providers: [ModalService],
     entryComponents: [ModalComponent]
