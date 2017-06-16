@@ -5,7 +5,7 @@
 import {Component, ComponentFactoryResolver, OnDestroy, ViewChild, ViewContainerRef} from "@angular/core";
 import {DynamicTypeService} from "../../../../services/dynamic.type.service";
 import {UiService} from "../../../../services/ui/ui.service";
-import {ModalService} from "../../../../services/modal/modal.module";
+import {ModalOptions, ModalService} from "../../../../services/modal/modal.module";
 import {AppDialogComponent} from "../../../../services/dialog/dialog.component";
 import {MdDialog} from "@angular/material";
 import {
@@ -95,7 +95,12 @@ export class AppDynamicViewComponent implements OnDestroy {
     // Customer Dialog
     showCustomerDialog($event: any) {
 
-        let ref = this.modalService.open(AppDialogComponent);
+        let ref = this.modalService.open(AppDialogComponent, {
+            // backdrop: 'static',
+            containerClass: 'hahah',
+            overlayClass: 'xixix',
+            contentClass: 'heheh'
+        } as ModalOptions);
 
         ref.modalClick = () => {
             console.log('customer model click');
