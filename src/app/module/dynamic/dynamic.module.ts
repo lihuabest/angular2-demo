@@ -10,6 +10,8 @@ import {DynamicViewDeactivateGuard} from "./components/view/dynamic.view.deactiv
 import {BrowserModule} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
+import {NgShowDirective} from "../../directives/ng.show.directive";
+import {AppDynamicTransclusionComponent} from "./components/transclusion/dynamic.transclusion.component";
 /**
  * Created by Administrator on 2017/6/6.
  */
@@ -25,7 +27,9 @@ import {RouterModule} from "@angular/router";
         AppDynamicViewComponent,
         AppDynamicOceanComponent,
         AppDynamicSkyComponent,
-        AppDynamicDragulaComponent
+        AppDynamicDragulaComponent,
+        AppDynamicTransclusionComponent,
+        NgShowDirective
     ],
     providers: [
         DynamicTypeService,
@@ -38,7 +42,8 @@ import {RouterModule} from "@angular/router";
         AppDynamicViewComponent,
         AppDynamicOceanComponent,
         AppDynamicSkyComponent,
-        AppDynamicDragulaComponent
+        AppDynamicDragulaComponent,
+        AppDynamicTransclusionComponent
     ]
 })
 export class DynamicModule {}

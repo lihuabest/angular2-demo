@@ -44,6 +44,8 @@ export class AppDynamicViewComponent implements OnDestroy {
 
     isShowAnimate: boolean = true;
 
+    isShowDirective: boolean = true;
+
     constructor(
         private dynamicTypeService: DynamicTypeService,
         private componentFactoryResolver: ComponentFactoryResolver,

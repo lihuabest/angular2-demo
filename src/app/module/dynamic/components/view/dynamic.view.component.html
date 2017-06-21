@@ -1,4 +1,4 @@
-<div>view</div>
+<h2>Dynamic Component</h2>
 <div>
     <ul>
         <li>
@@ -12,7 +12,11 @@
         </li>
     </ul>
 </div>
+<div class="dynamic-container">
+    <ng-template #dynamicHost></ng-template>
+</div>
 
+<h2>Dialog Modal</h2>
 <div>
     <a href="javascript:;" (click)="showMdDialog($event)">Angular Material Dialog test</a>
     <a href="javascript:;" (click)="showCustomerDialog($event)">Customer Dialog Test</a>
@@ -24,7 +28,12 @@
             *ngIf="isShowAnimate">animation</button>
 </div>
 
-<div class="dynamic-container">
-    <ng-template #dynamicHost></ng-template>
-</div>
+<h2>Directive</h2>
+<div><a href="javascript:;" (click)="isShowDirective=!isShowDirective">troggle show directive</a></div>
+<div *ngShow="isShowDirective">i am in directive</div>
 
+<h2>Transclusion</h2>
+<app-dynamic-transclusion-component>
+    <div>im out transclusion</div>
+    <div class="header">header</div>
+</app-dynamic-transclusion-component>
