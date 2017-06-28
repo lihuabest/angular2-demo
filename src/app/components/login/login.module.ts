@@ -9,7 +9,6 @@ import {AppDialogComponent} from "../../services/dialog/dialog.component";
 
 @NgModule({
     imports: [
-      BrowserModule,
       RouterModule,
     ],
     declarations: [
