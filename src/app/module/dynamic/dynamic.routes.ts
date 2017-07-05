@@ -2,6 +2,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {AppDynamicViewComponent} from "./components/view/dynamic.view.component";
 import {AppDynamicDragulaComponent} from "./components/dragula/dynamic.dragula.component";
+import {AppDynamicTreeComponent} from "./components/tree/dynamic.tree.component";
 import {DynamicViewDeactivateGuard} from "./components/view/dynamic.view.deactivate.guard";
 /**
  * Created by Administrator on 2017/6/6.
@@ -22,6 +23,10 @@ const DynamicRoutes: Routes = [
     {
         path: 'drag',
         component: AppDynamicDragulaComponent
+    },
+    {
+        path: 'tree',
+        component: AppDynamicTreeComponent
     }
 ];
 

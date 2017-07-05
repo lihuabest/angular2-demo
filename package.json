@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4203",
-    "build": "ng build --prod",
+    "build": "ng build --prod --output-hashing none",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -27,7 +27,7 @@
     "font-awesome": "^4.7.0",
     "ng2-dragula": "^1.5.0",
     "primeng": "^4.0.3",
-    "rxjs": "^5.4.1",
+    "rxjs": "^5.4.2",
     "zone.js": "^0.8.12"
   },
   "devDependencies": {
@@ -35,7 +35,7 @@
     "@angular/compiler-cli": "^4.2.2",
     "@types/jasmine": "^2.5.52",
     "@types/node": "^7.0.31",
-    "codelyzer": "~3.0.0",
+    "codelyzer": "^3.1.2",
     "jasmine-core": "^2.6.3",
     "jasmine-spec-reporter": "^4.1.0",
     "karma": "^1.7.0",

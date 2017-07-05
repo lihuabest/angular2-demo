@@ -6,12 +6,14 @@ import {AppDynamicOceanComponent} from "./components/ocean/dynamic.ocean.compone
 import {AppDynamicSkyComponent} from "./components/sky/dynamic.sky.component";
 import {DynamicTypeService} from "../../services/dynamic.type.service";
 import {AppDynamicDragulaComponent} from "./components/dragula/dynamic.dragula.component";
+import {AppDynamicTreeComponent} from "./components/tree/dynamic.tree.component";
 import {DynamicViewDeactivateGuard} from "./components/view/dynamic.view.deactivate.guard";
-import {BrowserModule} from "@angular/platform-browser";
+
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {NgShowDirective} from "../../directives/ng.show.directive";
 import {AppDynamicTransclusionComponent} from "./components/transclusion/dynamic.transclusion.component";
+import {AppTreeRootComponent} from "./components/tree/root/tree.root.component";
 /**
  * Created by Administrator on 2017/6/6.
  */
@@ -29,7 +31,9 @@ import {AppDynamicTransclusionComponent} from "./components/transclusion/dynamic
         AppDynamicSkyComponent,
         AppDynamicDragulaComponent,
         AppDynamicTransclusionComponent,
-        NgShowDirective
+        AppDynamicTreeComponent,
+        NgShowDirective,
+        AppTreeRootComponent
     ],
     providers: [
         DynamicTypeService,
@@ -43,7 +47,9 @@ import {AppDynamicTransclusionComponent} from "./components/transclusion/dynamic
         AppDynamicOceanComponent,
         AppDynamicSkyComponent,
         AppDynamicDragulaComponent,
-        AppDynamicTransclusionComponent
+        AppDynamicTransclusionComponent,
+        AppDynamicTreeComponent,
+        AppTreeRootComponent
     ]
 })
 export class DynamicModule {}
