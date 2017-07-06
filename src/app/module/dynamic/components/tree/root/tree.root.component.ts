@@ -11,11 +11,17 @@ import {Animations} from "../../../../../services/animatins.server";
         <div [class.tree-child]="isChild"
              [class.tree-root]="!isChild"
              *ngFor="let data of datas;let i=index;">
+            
             <div (click)="expandClick(data)">
-                <i class="fa fa-chevron-down" aria-hidden="true" *ngIf="data.children&&data.children.length&&data.expand"></i>
-                <i class="fa fa-chevron-right" aria-hidden="true" *ngIf="data.children&&data.children.length&&!data.expand"></i>
+                <i class="fa fa-chevron-right" 
+                   aria-hidden="true"
+                   *ngIf="data.children&&data.children.length"
+                   [@rotateRightToDown]="(data.children&&data.children.length&&data.expand)?'active':''"
+                ></i>
                 <span>{{ data.name }}</span>
             </div>
+            
+            <!--动画效果只能作用到规定的dom结构上-->
             <div *ngIf="data.children&&data.children.length&&data.expand"
                  [@slideInOut]="data.children&&data.children.length&&data.expand">
                 <app-tree-root-component
@@ -23,6 +29,7 @@ import {Animations} from "../../../../../services/animatins.server";
                     [isChild]="true">
                 </app-tree-root-component>
             </div>
+            
         </div>
     `,
     styles: [
@@ -36,7 +43,8 @@ import {Animations} from "../../../../../services/animatins.server";
             }
         `
     ],
-    animations: [Animations.slideInOut]
+    // 整个动画效果单独定义 并需要具备通用性
+    animations: [Animations.slideInOut, Animations.rotateRightToDown]
 })
 export class AppTreeRootComponent implements OnInit {
 
