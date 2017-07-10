@@ -34,6 +34,9 @@ export const routes: Routes = [
             }, {
                 path: 'dynamic',
                 loadChildren: 'app/module/dynamic/dynamic.module#DynamicModule',
+            }, {
+                path: 'canvas',
+                loadChildren: 'app/module/canvas/canvas.module#CanvasModule',
             }
         ]
     }

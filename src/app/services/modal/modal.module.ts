@@ -3,7 +3,7 @@
  */
 
 import {
-    ApplicationRef, Component, ComponentFactoryResolver, Injectable, NgModule,
+    ApplicationRef, Component, ComponentFactoryResolver, ComponentRef, Injectable, NgModule,
     OnInit,
     ViewChild,
     ViewContainerRef
@@ -41,7 +41,7 @@ export class ModalService {
     private contentComponent;       // 模态组件
     private contentInstance;　　　   // 模态组件实例
 
-    private modalComponentRef; 　　  // 根组件引用
+    private modalComponentRef: ComponentRef<any>; 　　  // 根组件引用
     private modalComponentInstance; // 根组件实例引用
 
     constructor(private _applicationRef: ApplicationRef,

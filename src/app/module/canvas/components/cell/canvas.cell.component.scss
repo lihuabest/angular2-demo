@@ -1,0 +1,24 @@
+.cell {
+    position: absolute;
+    border: 1px solid #747474;
+    .title {
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        cursor: move;
+        background: #BCBCBC;
+    }
+    .content {
+        position: absolute;
+        top: 30px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    .resize {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        cursor: se-resize;
+    }
+}

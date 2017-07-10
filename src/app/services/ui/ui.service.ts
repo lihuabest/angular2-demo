@@ -1,9 +1,10 @@
-import {DataTransferService} from "../data.transfer.service";
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
 /**
  * Created by Administrator on 2017/6/9.
  */
+
+import {DataTransferService} from "../data.transfer.service";
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class UiService {
@@ -21,7 +22,7 @@ export class UiService {
 
     confirm(
         content: string,
-        title:string | void = '提示'
+        title: string | void = '提示'
     ): Observable<Boolean> {
         let observe = Observable.create(observer => {
             this.dataTransferService.confirmDialog.next({

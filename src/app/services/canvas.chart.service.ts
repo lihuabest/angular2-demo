@@ -6,12 +6,12 @@ import {Injectable} from "@angular/core";
 import {AppCanvasCellBarComponent} from "../module/canvas/components/cell/bar/cancas.cell.bar.component";
 
 @Injectable()
-export class DynamicChartService {
+export class CanvasChartService {
     private static cellTypes = {
         bar: AppCanvasCellBarComponent
     };
 
     getCellByType(type: string) {
-        return DynamicChartService.cellTypes[type];
+        return CanvasChartService.cellTypes[type];
     }
 }

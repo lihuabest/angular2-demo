@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="cell"
+     [style.width.px]="cell.width"
+     [style.height.px]="cell.height"
+     [style.top.px]="cell.top"
+     [style.left.px]="cell.left"
+     [style.zIndex]="cell.zIndex">
+    <div class="title" (mousedown)="cellMoveStart($event)"></div>
+    <div class="content" [dragula]="'drag'" [style.padding.px]="cell.spacing">
+        <ng-template #dynamicChart></ng-template>
+    </div>
+    <span class="resize" (mousedown)="cellResizeStart($event)">
+        <i class="fa fa-arrows" aria-hidden="true"></i>
+    </span>
+</div>

@@ -77,7 +77,7 @@ export class AppDynamicViewComponent implements OnDestroy {
              this.uiService.confirm('确认离开').subscribe(val => {
                  // 这里就可以针对不同的选择操作做处理
                  setTimeout(() => {
-                     resolve(val);
+                     resolve(true);
                  }, 100);
              });
         });

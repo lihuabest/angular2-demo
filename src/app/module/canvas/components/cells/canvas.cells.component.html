@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="mb10 line">
+    <button  (click)="addCell()">添加</button>
+    <ul class="charts clearfix">
+        <li [dragula]="'drag'" *ngFor="let chart of charts" (mousedown)="onDragStart(chart)">
+            <span class="drag-cell">{{ chart.title }}</span>
+        </li>
+    </ul>
+</div>
+
+<!--<div class="canvas">-->
+    <!--<app-canvas-cell-component-->
+        <!--*ngFor="let cell of cells" [cell]="cell"-->
+        <!--(cellMove)="onCellMove($event)"-->
+        <!--(cellResize)="onCellResize($event)">-->
+    <!--</app-canvas-cell-component>-->
+<!--</div>-->
+
+<div echarts [options]="barDatas"></div>
