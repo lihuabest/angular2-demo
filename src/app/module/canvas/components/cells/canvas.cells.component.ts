@@ -31,6 +31,9 @@ export class AppCanvasCellsComponent implements OnInit, AfterViewInit, OnDestroy
     // change start y value
     cellChangeStartY: number;
 
+    // chart已经存在，正在被拖动或者resize
+    cellChartInstance: any;
+
     // 事件处理器
     eventsHandler = {};
 
@@ -38,7 +41,7 @@ export class AppCanvasCellsComponent implements OnInit, AfterViewInit, OnDestroy
     charts: Array<ChartModel> = [];
     // 当前被移动的chart
     chartDrag: ChartModel;
-
+    // chart subscription
     chartDropSubsubscribe: Subscription;
 
     barDatas: any;
@@ -68,7 +71,6 @@ export class AppCanvasCellsComponent implements OnInit, AfterViewInit, OnDestroy
 
     ngOnInit() {
         this.barDatas = BarData.datas;
-        console.log(this.barDatas)
 
         this.charts.push({
             title: '柱状图',
@@ -142,6 +144,8 @@ export class AppCanvasCellsComponent implements OnInit, AfterViewInit, OnDestroy
         this.cellChangeStartX = emitter.event.pageX;
         this.cellChangeStartY = emitter.event.pageY;
         this.cellChange.zIndex = this.getMaxZindex();
+
+        this.cellChartInstance = emitter.chartInstance;
     }
 
     /**
@@ -166,6 +170,11 @@ export class AppCanvasCellsComponent implements OnInit, AfterViewInit, OnDestroy
                 // resize
                 this.cellChange.width = this.cellChange.width + absChangeX;
                 this.cellChange.height = this.cellChange.height + absChangeY;
+
+                // echart resize
+                if (this.cellChartInstance && this.cellChartInstance.echartsIntance) {
+                    this.cellChartInstance.echartsIntance.resize();
+                }
             }
         }
     }
@@ -178,6 +187,8 @@ export class AppCanvasCellsComponent implements OnInit, AfterViewInit, OnDestroy
         if (this.cellMoving || this.cellResizing) {
             this.cellMoving = false;
             this.cellResizing = false;
+
+            this.cellChartInstance = null;
         }
     }
 

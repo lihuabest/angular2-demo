@@ -7,12 +7,10 @@
     </ul>
 </div>
 
-<!--<div class="canvas">-->
-    <!--<app-canvas-cell-component-->
-        <!--*ngFor="let cell of cells" [cell]="cell"-->
-        <!--(cellMove)="onCellMove($event)"-->
-        <!--(cellResize)="onCellResize($event)">-->
-    <!--</app-canvas-cell-component>-->
-<!--</div>-->
-
-<div echarts [options]="barDatas"></div>
+<div class="canvas">
+    <app-canvas-cell-component
+        *ngFor="let cell of cells" [cell]="cell"
+        (cellMove)="onCellMove($event)"
+        (cellResize)="onCellResize($event)">
+    </app-canvas-cell-component>
+</div>

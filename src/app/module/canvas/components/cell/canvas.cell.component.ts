@@ -3,7 +3,8 @@
  */
 
 import {
-    Component, ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
+    AfterViewInit,
+    Component, ComponentFactoryResolver, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewChildren,
     ViewContainerRef
 } from "@angular/core";
 import {DragulaService} from "ng2-dragula";
@@ -20,6 +21,8 @@ export class CellEventEmitterInterface {
     cell: CellModel;
     // 点击事件
     event: MouseEvent;
+    // chart instance
+    chartInstance?: any;
 }
 
 @Component({
@@ -27,7 +30,7 @@ export class CellEventEmitterInterface {
     templateUrl: './canvas.cell.component.html',
     styleUrls: ['canvas.cell.component.scss']
 })
-export class AppCanvasCellComponent implements OnInit, OnDestroy {
+export class AppCanvasCellComponent implements OnInit, OnDestroy, AfterViewInit {
     // 画布基本信息
     @Input()
     cell: CellModel;
@@ -44,6 +47,8 @@ export class AppCanvasCellComponent implements OnInit, OnDestroy {
 
     @ViewChild('dynamicChart', { read: ViewContainerRef })
     dynamicChart: ViewContainerRef;
+
+    @ViewChild('content') contentRef: any;
 
     constructor (
         private dragulaService: DragulaService,
@@ -93,6 +98,11 @@ export class AppCanvasCellComponent implements OnInit, OnDestroy {
         // console.log(this.cell)
     }
 
+    ngAfterViewInit() {
+        // caculate content width/height
+        this.caculateContent();
+    }
+
     ngOnDestroy() {
         // unsubscribe chartDropData
         this.chartDropDataSubscription.unsubscribe();
@@ -120,8 +130,13 @@ export class AppCanvasCellComponent implements OnInit, OnDestroy {
     cellResizeStart($event: MouseEvent) {
         this.cellResize.emit({
             cell: this.cell,
-            event: $event
+            event: $event,
+            chartInstance: this.dynamicChartInstance
         });
+    }
+
+    caculateContent() {
+        const content = this.contentRef.nativeElement;
     }
 
 }

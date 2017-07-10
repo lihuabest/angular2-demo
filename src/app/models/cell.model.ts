@@ -14,10 +14,10 @@ export interface CellModelInterface {
 export class CellModel {
     width: number = 300;
     height: number = 350;
-    spacing: number = 10;
     left: number = 10;
     top: number = 10;
     zIndex: number = 10;
+    tHeight: number = 30;
 
     constructor(config?: CellModelInterface) {
         Object.assign(this, config);

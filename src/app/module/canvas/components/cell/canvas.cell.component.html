@@ -4,8 +4,15 @@
      [style.top.px]="cell.top"
      [style.left.px]="cell.left"
      [style.zIndex]="cell.zIndex">
-    <div class="title" (mousedown)="cellMoveStart($event)"></div>
-    <div class="content" [dragula]="'drag'" [style.padding.px]="cell.spacing">
+    <div class="title"
+         [style.height.px]="cell.tHeight"
+         (mousedown)="cellMoveStart($event)"></div>
+    <div class="content"
+         [dragula]="'drag'"
+         #content
+         [style.width.px]="cell.width"
+         [style.height.px]="cell.height - cell.tHeight"
+    >
         <ng-template #dynamicChart></ng-template>
     </div>
     <span class="resize" (mousedown)="cellResizeStart($event)">

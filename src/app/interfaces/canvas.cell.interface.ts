@@ -6,6 +6,7 @@ import {ChartModel} from "../models/chartModel";
 
 export interface CanvasCellInterface {
 
+    // set init data
     setOption(option: ChartModel);
 
 }

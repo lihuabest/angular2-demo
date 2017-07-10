@@ -18,7 +18,8 @@ import {CanvasChartService} from "../../services/canvas.chart.service";
     imports: [
         CommonModule,
         CanvasRoutesModule,
-        DragulaModule
+        DragulaModule,
+        AngularEchartsModule
     ],
     declarations: [
         AppCanvasCellsComponent,

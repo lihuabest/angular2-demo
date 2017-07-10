@@ -16,7 +16,13 @@ export class AppCanvasCellBarComponent implements CanvasCellInterface {
 
     option: ChartModel;
 
+    echartsIntance: any;
+
     setOption(option: ChartModel) {
         this.option = option;
+    }
+
+    onChartInit(ec) {
+        this.echartsIntance = ec;
     }
 }
