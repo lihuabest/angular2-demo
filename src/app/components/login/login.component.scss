@@ -1,0 +1,28 @@
+.charts {
+    margin-top: 10px;
+    width: 100%;
+
+    .chart {
+        width: 33.33%;
+        height: 200px;
+        display: table-cell;
+        //float: left;
+        &:first-child {
+            .inner {
+                margin-left: 6.666%;
+            }
+        }
+        &:last-child {
+            .inner {
+                margin-left: 6.666%;
+            }
+        }
+        .inner {
+            width: 90%;
+            height: 100%;
+            margin-left: 3.333%;
+            margin-right: 3.333%;
+            background: orangered;
+        }
+    }
+}
