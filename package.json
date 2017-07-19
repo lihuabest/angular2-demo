@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4203",
+    "start": "ng serve --host 0.0.0.0 --disable-host-check --port 4203 ",
     "build": "ng build --aot --prod --output-hashing none",
     "aot": "ngc -p tsconfig-aot.json",
     "test": "ng test",
@@ -24,7 +24,9 @@
     "@angular/platform-browser-dynamic": "^4.2.2",
     "@angular/platform-server": "^4.2.5",
     "@angular/router": "^4.2.2",
+    "@swimlane/ngx-charts": "^6.0.0",
     "core-js": "^2.4.1",
+    "d3": "^4.10.0",
     "dragula": "^3.7.2",
     "echarts": "^3.6.2",
     "font-awesome": "^4.7.0",
@@ -38,6 +40,7 @@
   "devDependencies": {
     "@angular/cli": "^1.1.2",
     "@angular/compiler-cli": "^4.2.5",
+    "@types/d3": "^4.9.0",
     "@types/echarts": "0.0.6",
     "@types/jasmine": "^2.5.52",
     "@types/node": "^7.0.31",

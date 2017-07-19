@@ -1,0 +1,45 @@
+/**
+ * Created by LIHUA on 2017/7/19/019.
+ */
+
+#d3-container, #d3-bar-container {
+    .bar {
+        display: inline-block;
+        width: 20px;
+        margin-right: 2px;
+        background-color: teal;
+}
+
+    .axis path, .axis line{
+        fill: none;
+        stroke: black;
+        shape-rendering: crispEdges;
+    }
+
+    .axis text {
+        font-family: sans-serif;
+        font-size: 11px;
+    }
+}
+
+#container{
+    background: #ddd;
+    width: 500px;
+    height: 250px;
+}
+
+path{
+    fill:none;
+    stroke:steelblue;
+    stroke-width:3;
+}
+
+text{
+    fill:black;
+}
+
+.domain,.tick{
+    stroke:gray;
+    stroke-width:1;
+
+}
