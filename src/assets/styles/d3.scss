@@ -28,18 +28,40 @@
     height: 250px;
 }
 
-path{
+path {
     fill:none;
     stroke:steelblue;
     stroke-width:3;
 }
 
-text{
+text {
     fill:black;
 }
 
 .domain,.tick{
     stroke:gray;
     stroke-width:1;
+}
 
+.bar-1 {
+    fill: steelblue;
+}
+
+.bar-1:hover {
+    fill: brown;
+}
+
+.axis--x path {
+    display: none;
+}
+
+#d3-pipe-container {
+    .arc text {
+        font: 10px sans-serif;
+        text-anchor: middle;
+    }
+
+    .arc path {
+        stroke: #fff;
+    }
 }

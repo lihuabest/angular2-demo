@@ -11,43 +11,70 @@ import * as d3 from 'd3';
     styles: [`
         #d3-bar-container {
             margin-top: 30px;
+            border: 1px solid #EEEEEE;
         }
     `]
 })
 export class AppCanvasD3BarComponent implements AfterViewInit {
-    // https://segmentfault.com/a/1190000009120894
-    // http://blog.csdn.net/lzhlzz/article/details/34429675
+    // https://bl.ocks.org/mbostock/3885304
     ngAfterViewInit () {
-        // width,height
-        // let width = 500,
-        //     height = 250,
-        //     margin = {left: 50,top: 30,right: 20,bottom: 20},
-        //     g_width = width - margin.left - margin.right,
-        //     g_height = height - margin.top - margin.bottom;
-        //
-        // let svg = d3.select('#d3-bar-container')
-        //     .append('svg')
-        //     .attr('width', width)
-        //     .attr('height', height);
-        //
-        // let g = d3.select('svg').append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-        //
-        // let data = [1, 3, 5, 7, 8, 4, 3, 7];
-        // let scale_x = d3.scaleLinear().domain([0, data.length - 1]).range([0, g_width]);
-        //
-        // let scale_y = d3.scaleLinear().domain([0, d3.max(data)]).range([g_height, 0]);
-        //
-        // let line_generator = d3.line()
-        //     .x(function(d, i){return scale_x(i)}) // 0,1,2,3...
-        //     .y(function(d){return scale_y(d)}) // 1,3,5
-        //     .curve(d3.curveCardinal);
-        //
-        // g.append('path').attr('d', line_generator(data));
-        //
-        // let x_axis = d3.axisBottom(scale_x),
-        //     y_axis = d3.axisLeft(scale_y);
-        //
-        // g.append('g').call(x_axis).attr('transform', 'translate(0,' + g_height + ')');
-        // g.append('g').call(y_axis).append('text').text('Price($)').attr('transform', 'rotate(-90)').attr('text-anchor', 'end').attr('dy', '2em');
+        let svgWidth = 960,
+            svgHeight = 500,
+            margin = {top: 20, right: 20, bottom: 30, left: 40},
+            width = svgWidth - margin.left - margin.right,
+            height = svgHeight - margin.top - margin.bottom;
+
+        let svg = d3.select('#d3-bar-container')
+            .append('svg')
+            .attr('width', svgWidth)
+            .attr('height', svgHeight );
+
+        let x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+            y = d3.scaleLinear().rangeRound([height, 0]);
+
+        let g = svg.append('g')
+            // .attr('tansform', `translate(${margin.left},${margin.top})`); // 这里语法运行没用
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+        d3.tsv('./assets/data.bar.tsv', function (d) {
+            return {
+                letter: d.letter,
+                frequency: Number(d.frequency)
+            };
+        }, (error, data) => {
+            if (error) {
+                throw error;
+            }
+
+            x.domain(data.map(d => d.letter));
+            y.domain([0, d3.max(data, d => d.frequency)]);
+
+            g.append('g')
+                .attr('class', 'axis axis--x')
+                .attr('transform', `translate(0, ${ height })`)
+                .call(d3.axisBottom(x));
+
+            g.append('g')
+                .attr('class', 'axis axis--y')
+                .call(d3.axisLeft(y).ticks(10, '%'));
+            // .append('text')
+            //     .attr('transform', 'rotate(-90)')
+            //     .attr('y', 6)
+            //     .attr('dy', '0.71em')
+            //     .attr('text-anchor', 'red')
+            //     .text('Frequency');
+
+            g.selectAll('.bar-1')
+                .data(data)
+                .enter()
+                .append('rect')
+                .attr('class', 'bar-1')
+                .attr('x', (d, i) => i * (x.bandwidth() + 3) + 10)
+                .attr('y', d => y(d.frequency))
+                .attr('width', x.bandwidth())
+                .attr('height', d => height - y(d.frequency));
+
+        });
+
     }
 }
