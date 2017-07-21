@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0 --disable-host-check --port 4203 ",
+    "start": "ng serve --host 0.0.0.0 --disable-host-check --port 4203 --proxy-config proxy.conf.json",
     "build": "ng build --aot --prod --output-hashing none",
     "aot": "ngc -p tsconfig-aot.json",
     "test": "ng test",

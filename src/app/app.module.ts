@@ -14,6 +14,7 @@ import {DataTransferService} from "./services/data.transfer.service";
 import {MdDialogModule} from "@angular/material";
 import {ModalModule} from "./services/modal/modal.module";
 import {LogService} from "./services/log.service";
+import {RequestService} from "./plugins/request.service";
 
 /**
  NgModule的主要属性如下：
@@ -27,7 +28,7 @@ import {LogService} from "./services/log.service";
 @NgModule({
     declarations: [
         AppComponent,
-        UiConfirmDialogComponent,
+        UiConfirmDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -43,7 +44,8 @@ import {LogService} from "./services/log.service";
     providers: [
         UiService,
         DataTransferService,
-        LogService
+        LogService,
+        RequestService
     ],
     bootstrap: [
         AppComponent,

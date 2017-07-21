@@ -74,7 +74,7 @@ export class AppCanvasD3Component implements AfterViewInit {
             .attr('width', 500)
             .attr('height', maxHeight);
 
-        console.log(dataset);
+        // console.log(dataset);
         const yScale = d3.scaleLinear().range([0, 150]).domain([0, d3.max(dataset)]);
         const yAxis = d3.axisLeft(yScale);
 

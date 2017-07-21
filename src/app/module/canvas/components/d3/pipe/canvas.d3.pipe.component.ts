@@ -19,6 +19,7 @@ export class AppCanvasD3PipeComponent implements AfterViewInit {
     width: number = 960;
     height: number = 500;
 
+    // https://bl.ocks.org/mbostock/3887193
     ngAfterViewInit () {
         let width = this.width,
             height = this.height,
