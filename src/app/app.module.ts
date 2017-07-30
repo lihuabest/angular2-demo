@@ -3,6 +3,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
+// import {HotTableModule} from 'ng2-handsontable';
 
 import {AppComponent} from './app.component';
 import {AppRoutesModule} from "./app.routers";
@@ -39,7 +40,7 @@ import {RequestService} from "./plugins/request.service";
         LoginModule,
         MainModule,
         MdDialogModule,
-        ModalModule
+        ModalModule,
     ],
     providers: [
         UiService,

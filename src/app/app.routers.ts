@@ -37,6 +37,9 @@ export const routes: Routes = [
             }, {
                 path: 'canvas',
                 loadChildren: 'app/module/canvas/canvas.module#CanvasModule',
+            }, {
+                path: 'handsontable',
+                loadChildren: 'app/module/handsontable/handsontable.module#HandsontableModule',
             }
         ]
     }
