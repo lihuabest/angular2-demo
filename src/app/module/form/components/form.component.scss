@@ -4,6 +4,7 @@ $redColor: #f7f7f7;
 $borderRradius: 3px;
 $transitionAll: all .3s cubic-bezier(.645, .045, .355, 1);
 
+
 body {
     font-family: Helvetica Neue For Number,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif;
     line-height: 1.5;
@@ -55,6 +56,9 @@ body {
         background-color: #f7f7f7;
         border-color: $borderColor;
         cursor: not-allowed;
+        .fa, .iconfont {
+            color: rgba(0, 0, 0, .25) !important;
+        }
         &:hover {
             opacity: 0.8;
         }
@@ -65,10 +69,18 @@ body {
                 color: $backgroundColor;
             }
         }
+        &.only {
+            padding: 0;
+            border-radius: 50%;
+            width: 28px;
+            .fa, .iconfont {
+                margin-right: 0;
+            }
+        }
         .fa, .iconfont {
             font-size: 14px;
             margin-right: 2px;
-            color: rgba(0, 0, 0, 0.65);
+            color: rgba(0, 0, 0, 0.45);
             transition: $transitionAll;
         }
     }
@@ -77,6 +89,9 @@ body {
         font-size: 14px;
         height: 32px;
         &.icon {
+            &.only {
+                width: 32px;
+            }
             .fa, .iconfont {
                 font-size: 16px;
             }
@@ -87,6 +102,9 @@ body {
         font-size: 12px;
         height: 22px;
         &.icon {
+            &.only {
+                width: 22px;
+            }
             .fa, .iconfont {
                 font-size: 12px;
             }
@@ -286,5 +304,159 @@ textarea.input {
     }
     input[type='radio']:checked + label:after {
         opacity: 1;
+    }
+}
+
+// 栅格行
+$prefix: 'w';
+$baseHeight: 50px;
+.row {
+    position: relative;
+    height: auto;
+    zoom: 1;
+    display: block;
+    &:after, &:before {
+        content: ' ';
+        display: table;
+    }
+    &:after {
+        clear: both;
+        visibility: hidden;
+        font-size: 0;
+        height: 0;
+    }
+    // 间隔
+    &.gutter {
+        margin-left: -4px;
+        margin-right: -4px;
+        .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+            margin-left: 4px;
+            margin-right: 4px;
+        }
+    }
+    .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+        float: left;
+        position: relative;
+        flex: 0 0 auto;
+    }
+    .col-1 {
+        width: 8.333333333%;
+    }
+    .col-2 {
+        width: 16.66666667%;
+    }
+    .col-3 {
+        width: 25%;
+    }
+    .col-4 {
+        width: 33.33333333%;
+    }
+    .col-5 {
+        width: 41.66666667%;
+    }
+    .col-6 {
+        width: 50%;
+    }
+    .col-7 {
+        width: 58.33333333%;
+    }
+    .col-8 {
+        width: 66.66666667%;
+    }
+    .col-9 {
+        width:75%;
+    }
+    .col-10 {
+        width:83.33333333%;
+    }
+    .col-11 {
+        width:91.66666667%;
+    }
+    .col-12 {
+        width:100%;
+    }
+    // push 定位(左边开始)
+    .col-push-1 {
+        left: 8.333333333%;
+    }
+    .col-push-2 {
+        left: 16.66666667%;
+    }
+    .col-push-3 {
+        left: 25%;
+    }
+    .col-push-4 {
+        left: 33.33333333%;
+    }
+    .col-push-5 {
+        left: 41.66666667%;
+    }
+    .col-push-6 {
+        left: 50%;
+    }
+    .col-push-7 {
+        left: 58.33333333%;
+    }
+    .col-push-8 {
+        left: 66.66666667%;
+    }
+    .col-push-9 {
+        left: 75%;
+    }
+    .col-push-10 {
+        left: 83.33333333%;
+    }
+    .col-push-11 {
+        left: 91.66666667%;
+    }
+    .col-push-12 {
+        left: 100%;
+    }
+    // 栅格左侧的间隔格数 间隔内不可以有栅格
+    .offset-1 {
+        margin-left: 8.333333333%;
+    }
+    .offset-2 {
+        margin-left: 16.66666667%;
+    }
+    .offset-3 {
+        margin-left: 25%;
+    }
+    .offset-4 {
+        margin-left: 33.33333333%;
+    }
+    .offset-5 {
+        margin-left: 41.66666667%;
+    }
+    .offset-6 {
+        margin-left: 50%;
+    }
+    .offset-7 {
+        margin-left: 58.33333333%;
+    }
+    .offset-8 {
+        margin-left: 66.66666667%;
+    }
+    .offset-9 {
+        margin-left:75%;
+    }
+    .offset-10 {
+        margin-left:83.33333333%;
+    }
+    .offset-11 {
+        margin-left:91.66666667%;
+    }
+}
+
+.rowstyle {
+    > div {
+        text-align: center;
+        color: #fff;
+        &:nth-child(odd) {
+            background: #4CBCF0;
+        }
+        &:nth-child(even) {
+            background: #00A0E9;
+        }
     }
 }
