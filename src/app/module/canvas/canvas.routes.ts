@@ -3,14 +3,20 @@
  */
 
 import {RouterModule, Routes} from "@angular/router";
-import {AppCanvasCellsComponent} from "./components/cells/canvas.cells.component";
 import {NgModule} from "@angular/core";
+
+import {AppCanvasCellsComponent} from "./components/cells/canvas.cells.component";
+import {AppCanvasJsplumbComponent} from "./components/jsplumb/canvas.jsplumb.component";
 
 const canvasModule: Routes = [
     {
         path: '',
         pathMatch: 'full',
         component: AppCanvasCellsComponent
+    }, {
+        path: 'jsplumb',
+        pathMatch: 'full',
+        component: AppCanvasJsplumbComponent
     }
 ];
 

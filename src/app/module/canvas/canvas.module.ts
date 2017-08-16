@@ -16,6 +16,7 @@ import {AppCanvasD3Component} from "./components/d3/canvas.d3.component";
 import {AppCanvasD3PipeComponent} from "./components/d3/pipe/canvas.d3.pipe.component";
 import {AppCanvasD3BarComponent} from "./components/d3/bar/canvas.d3.bar.component";
 import {AppCanvasD3BarGroupComponent} from "./components/d3/bar.group/canvas.d3.bar.group.component";
+import {AppCanvasJsplumbComponent} from "./components/jsplumb/canvas.jsplumb.component";
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import {AppCanvasD3BarGroupComponent} from "./components/d3/bar.group/canvas.d3.
         AppCanvasD3Component,
         AppCanvasD3PipeComponent,
         AppCanvasD3BarComponent,
-        AppCanvasD3BarGroupComponent
+        AppCanvasD3BarGroupComponent,
+        AppCanvasJsplumbComponent
     ],
     // 声明没有在模板中使用的组件，可能是动态使用的组件
     entryComponents: [
