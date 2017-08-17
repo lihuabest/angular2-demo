@@ -1,7 +1,8 @@
 /**
  * Created by LIHUA on 2017/8/16.
  */
-import {AfterContentInit, Component} from "@angular/core";
+import {AfterContentInit, Component, ElementRef} from "@angular/core";
+import {isCombinedNodeFlagSet} from "tslint";
 // import * as d3 from 'd3';
 declare var jsPlumb: any;
 
@@ -12,12 +13,16 @@ declare var jsPlumb: any;
 })
 export class AppCanvasJsplumbComponent implements AfterContentInit {
 
+    ins: any;
+
+    drapPos: any;
+
     constructor() {
 
     }
 
     ngAfterContentInit() {
-        let items = document.querySelectorAll('.item');
+        // let items = document.querySelectorAll('.item');
 
         // jsPlumb.importDefaults({
         //     DragOptions: { cursor: 'pointer'}, // 拖动时鼠标停留在该元素上显示指针，通过css控制
@@ -29,147 +34,124 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
         //     Anchors: [ "TopCenter", "BottomCenter" ]
         // });
 
+        const _this = this;
+        jsPlumb.ready(() => {
 
+            _this.ins = jsPlumb.getInstance();
 
-        jsPlumb.ready(function() {
-            // jsPlumb.makeSource(items, {
-            //     connector: 'StateMachine'
-            // });
-            // jsPlumb.makeTarget(items, {
-            //     anchor: 'Continuous'
-            // });
-
-            let ins = jsPlumb.getInstance();
-
-            ins.connect({
-                source: items
-            });
-            ins.draggable(document.querySelectorAll('.item'))
-
-        });
-
-        // this.init();
-    }
-
-    init() {
-        jsPlumb.ready(function() {
-            jsPlumb.importDefaults({
-                DragOptions : { cursor: 'pointer', zIndex: 2000 },
-                PaintStyle : { strokeStyle: '#666' },
-                EndpointStyle : { width: 20, height: 16, strokeStyle: '#666' },
-                Endpoint : "Rectangle",
-                Anchors : ["TopCenter"],
-                // 控制是否有箭头
-                ConnectionOverlays: [
-                    [ "Arrow", { location: 1 } ],
-                    [ "Label", {
-                        location: 0.1,
-                        id: "label",
-                        cssClass: "aLabel"
-                    }]
-                ]
-            });
-            let exampleDropOptions = {
-                hoverClass: "dropHover",
-                activeClass: "dragActive"
-            };
-
-            let basicType = {
-                connector: "StateMachine",
-                paintStyle: { strokeStyle: "red", lineWidth: 4 },
-                hoverPaintStyle: { strokeStyle: "blue" },
-                overlays: [
-                    "Arrow"
-                ]
-            };
-            jsPlumb.registerConnectionType("basic", basicType);
-
-            let color1 = "#316b31";
-            let exampleEndpoint1 = {
-                uuid: 101,
-                endpoint: ["Dot", { radius: 11 }], // 连接点的形状、大小
-                paintStyle: { fillStyle: color1 }, // 连接点的颜色
-                isSource: true,
-                scope: "green dot", // 点击该颜色的时候，其余该颜色的点都会显示虚线框
-                connectorStyle: { strokeStyle: color1, lineWidth: 6 }, // 点与点之间连线颜色
-                connector: ["Bezier", { curviness: 63 } ], // 线条形状，可弯曲
-                maxConnections: 1,
-                isTarget: true,
-                dropOptions : exampleDropOptions
-            };
-
-            let exampleEndpoint11 = {
-                uuid: 1011,
-                endpoint: ["Dot", { radius: 11 }], // 连接点的形状、大小
-                paintStyle: { fillStyle: color1 }, // 连接点的颜色
-                isSource: true,
-                scope: "green dot", // 点击该颜色的时候，其余该颜色的点都会显示虚线框
-                connectorStyle: { strokeStyle: color1, lineWidth: 6 }, // 点与点之间连线颜色
-                connector: ["Bezier", { curviness: 63 } ], // 线条形状，可弯曲
-                maxConnections: 1,
-                isTarget: true,
-                dropOptions : exampleDropOptions,
-                overlays: [
-                    "Arrow"
-                ]
-            };
-            let color2 = "rgba(229,219,61,0.5)";
-            let exampleEndpoint2 = {
-                uuid: 102,
-                endpoint: "Rectangle",
-                anchor: "BottomLeft", // 连接点的位置，可以被覆盖
-                paintStyle: { fillStyle: color2, opacity: 0.5 },
-                isSource: true,
-                scope: 'yellow dot',
-                connectorStyle: { strokeStyle: color2, lineWidth: 4 },
-                connector : "Straight", // 线条形状，直线
-                isTarget: true,
-                dropOptions : exampleDropOptions,
-                beforeDetach: function(conn) {
-                    return confirm("Detach connection?");
+            _this.ins.draggable(document.querySelectorAll('.jsp-item'), {
+                clone: true,
+                drag: function (event) {
+                    // console.log(event);
+                    _this.drapPos = event.pos;
                 },
-                onMaxConnections: function(info) {
-                    alert("Cannot drop connection " + info.connection.id + " : maxConnections has been reached on Endpoint " + info.endpoint.id);
+            });
+
+            _this.ins.droppable(document.querySelector('.jsp-target-container'), {
+                drop: function (event) {
+                    if (event.drag.el.classList.contains('origin')) {
+                        _this.createItem(event);
+                    }
                 }
-            };
+            });
 
-            let exampleEndpoint21 = {
-                uuid: 1021,
-                endpoint: "Rectangle",
-                anchor: "BottomLeft", // 连接点的位置，可以被覆盖
-                paintStyle: { fillStyle: color2, opacity: 0.5 },
-                isSource: true,
-                scope: 'yellow dot',
-                connectorStyle: { strokeStyle: color2, lineWidth: 4 },
-                connector : "Straight", // 线条形状，直线
-                isTarget: true,
-                dropOptions : exampleDropOptions,
-                beforeDetach: function(conn) {
-                    return confirm("Detach connection?");
-                },
-                onMaxConnections: function(info) {
-                    alert("Cannot drop connection " + info.connection.id + " : maxConnections has been reached on Endpoint " + info.endpoint.id);
-                }
-            };
-
-            // 左上角为起点，0.2表示相对x的偏移量，0.5表示相对y的偏移量
-            let anchors = [[0.2, 0.5, 1, 0], [0.8, 1, 0, 1], [0, 0.8, -1, 0], [0.2, 0, 0, -1] ],
-                maxConnectionsCallback = function(info) {
-                    alert("Cannot drop connection " + info.connection.id + " : maxConnections has been reached on Endpoint " + info.endpoint.id);
-                };
-            let e1 = jsPlumb.addEndpoint("state2", { anchor: "LeftMiddle" }, exampleEndpoint11);
-            e1.bind("maxConnections", maxConnectionsCallback);
-            jsPlumb.addEndpoint("state1", exampleEndpoint1);
-            jsPlumb.addEndpoint("state3", exampleEndpoint2);
-            jsPlumb.addEndpoint("state1", {anchor: anchors}, exampleEndpoint21);
-
-            // 固定连线
-            jsPlumb.connect({uuids: [101, 1011]});
-            jsPlumb.connect({uuids: [102, 1021]});
-
-            // 可拖动
-            jsPlumb.draggable(document.querySelectorAll('.item'));
         });
     }
 
+    createItem(event: any) {
+        let container = document.querySelector('.jsp-target-container');
+        let div = document.createElement('div');
+        div.classList.add('jsp-item');
+        div.innerHTML = event.drag.el.innerHTML;
+
+        let parentPosition = this.getAbsPoint(container);
+        let x = this.drapPos[0] - parentPosition.x;
+        let y = this.drapPos[1] - parentPosition.y;
+        div.style.left = x + 'px';
+        div.style.top = y + 'px';
+
+        container.appendChild(div);
+
+        // let cope element drag
+        this.ins.draggable(div, {
+            containment: container
+        });
+
+        this.ins.addEndpoint(div, this.getEndPoint().firstPoint);
+
+        console.log(event)
+    }
+
+    getEndPoint() {
+        let exampleDropOptions = {
+            hoverClass: "dropHover", // 释放时指定鼠标停留在该元素上使用的css class
+            activeClass: "dragActive" // 可拖动到的元素使用的css class
+        };
+
+        let color1 = "#316b31";
+        let firstPoint = {
+            endpoint: ["Dot", { radius: 11 }], // 设置连接点的形状为圆形
+            paintStyle: { fill: color1 }, // 设置连接点的颜色
+            isSource: true,  // 是否可以拖动（作为连线起点）
+            scope: "green dot", // 连接点的标识符，只有标识符相同的连接点才能连接
+            connectorStyle: { strokeStyle: color1, lineWidth: 6 }, // 连线颜色、粗细
+            connector: ["Bezier", { curviness: 63 } ], // 设置连线为贝塞尔曲线
+            maxConnections: 1, // 设置连接点最多可以连接几条线
+            isTarget: true,  // 是否可以放置（作为连线终点）
+            dropOptions: exampleDropOptions, // 设置放置相关的css
+        };
+
+        let color2 = "rgba(229,219,61,0.5)";
+        let secondPoint = {
+            endpoint: "Rectangle",   // 设置连接点的形状为矩形
+            anchor: "BottomLeft",    // 设置连接点的位置，左下角
+            paintStyle: { fill: color2, opacity: 0.5 },   // 设置连接点的颜色、透明度
+            isSource: true,  // 同上
+            scope: 'yellow dot', // 同上
+            connectorStyle: { strokeStyle: color2, lineWidth: 4}, // 同上
+            connector : "Straight", // 设置连线为直线
+            isTarget: true,  // 同上
+            maxConnections: 3, // 同上
+            dropOptions : exampleDropOptions, // 同上
+            beforeDetach: function(conn) {   // 绑定一个函数，在连线前弹出确认框
+                return confirm("Detach connection?");
+            },
+            onMaxConnections: function(info) { // 绑定一个函数，当到达最大连接个数时弹出提示框
+                alert("Cannot drop connection " + info.connection.id + " : maxConnections has been reached on Endpoint " + info.endpoint.id);
+            }
+        };
+
+        let thirdPoint = {
+            anchor: [ "BottomCenter", "TopCenter" ],
+            // endpoint: "Rectangle",
+            endpoint: ["Dot", { radius: 5 }],
+            paintStyle: { fill: '#316b31' },
+            ConnectionOverlays: [
+                [ "Arrow", { // 箭头的样式
+                    location: 1,
+                    visible: true,
+                    width: 11,
+                    length: 11,
+                    id: "ARROW",
+                }]
+            ]
+        };
+
+        return {firstPoint, secondPoint, thirdPoint}
+    }
+
+    /**
+     * 获取元素文档位置
+     * @param element
+     * @returns {{x: number; y: number}}
+     */
+    getAbsPoint(element: any) {
+        let x = element.offsetLeft,
+            y = element.offsetTop;
+        while (element = element.offsetParent) {
+            x += element.offsetLeft;
+            y += element.offsetTop;
+        }
+        return {x, y}
+    }
 }

@@ -65,3 +65,42 @@ text {
         stroke: #fff;
     }
 }
+
+
+/**
+     临时写
+ */
+.jsp-container {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    border: 1px solid black;
+    float: left;
+}
+.jsp-target-container {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    border: 1px solid black;
+    float: left;
+    margin-left: 20px;
+}
+.jsp-item {
+    border: 1px solid black;
+    background-color: #ddddff;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    &#state1 {
+        left: 10px;
+        top: 10px
+    }
+    &#state2 {
+        left: 10px;
+        top: 120px
+    }
+    &#state3 {
+        left: 10px;
+        top: 230px
+    }
+}
