@@ -1,9 +1,11 @@
 /**
  * Created by LIHUA on 2017/8/16.
  */
-import {AfterContentInit, Component, ElementRef} from "@angular/core";
-import {isCombinedNodeFlagSet} from "tslint";
-// import * as d3 from 'd3';
+import {AfterContentInit, Component} from "@angular/core";
+
+/**
+ * https://community.jsplumbtoolkit.com/doc/home.html 社区版api
+ */
 declare var jsPlumb: any;
 
 @Component({
@@ -24,15 +26,14 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
     ngAfterContentInit() {
         // let items = document.querySelectorAll('.item');
 
-        // jsPlumb.importDefaults({
-        //     DragOptions: { cursor: 'pointer'}, // 拖动时鼠标停留在该元素上显示指针，通过css控制
-        //     PaintStyle: { strokeStyle: '#666' }, // 元素的默认颜色
-        //     EndpointStyle: { width: 20, height: 16, strokeStyle: '#666' }, // 连接点的默认颜色
-        //     Endpoint: 'Rectangle', // 连接点的默认形状
-        //     Anchors: ['TopCenter'] // 连接点的默认位置
-        //     Connector: [ "Bezier", { curviness: 150 } ],
-        //     Anchors: [ "TopCenter", "BottomCenter" ]
-        // });
+        jsPlumb.importDefaults({
+            Connector : [ "Bezier", { curviness: 150 } ],
+            Anchors : [ "TopCenter", "BottomCenter" ],
+            Overlays: [
+                [ "Arrow", {width: 10, length: 10, location: 1} ]
+            ],
+            HoverPaintStyle: { stroke: "orange" }
+        });
 
         const _this = this;
         jsPlumb.ready(() => {
@@ -88,13 +89,12 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
             activeClass: "dragActive" // 可拖动到的元素使用的css class
         };
 
-        let color1 = "#316b31";
         let firstPoint = {
-            endpoint: ["Dot", { radius: 11 }], // 设置连接点的形状为圆形
-            paintStyle: { fill: color1 }, // 设置连接点的颜色
+            endpoint: ["Dot", { radius: 5 }], // 设置连接点的形状为圆形
+            paintStyle: { fill: '#316b31' }, // 设置连接点的颜色
             isSource: true,  // 是否可以拖动（作为连线起点）
             scope: "green dot", // 连接点的标识符，只有标识符相同的连接点才能连接
-            connectorStyle: { strokeStyle: color1, lineWidth: 6 }, // 连线颜色、粗细
+            connectorStyle: { stroke: '#89bcde', strokeWidth: 2, fill: 'none' }, // 连线颜色、粗细
             connector: ["Bezier", { curviness: 63 } ], // 设置连线为贝塞尔曲线
             maxConnections: 1, // 设置连接点最多可以连接几条线
             isTarget: true,  // 是否可以放置（作为连线终点）

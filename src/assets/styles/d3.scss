@@ -1,70 +1,70 @@
 /**
  * Created by LIHUA on 2017/7/19/019.
  */
-
-#d3-container, #d3-bar-container {
-    .bar {
-        display: inline-block;
-        width: 20px;
-        margin-right: 2px;
-        background-color: teal;
-}
-
-    .axis path, .axis line{
-        fill: none;
-        stroke: black;
-        shape-rendering: crispEdges;
-    }
-
-    .axis text {
-        font-family: sans-serif;
-        font-size: 11px;
-    }
-}
-
-#container{
-    background: #ddd;
-    width: 500px;
-    height: 250px;
-}
-
-path {
-    fill:none;
-    stroke:steelblue;
-    stroke-width:3;
-}
-
-text {
-    fill:black;
-}
-
-.domain,.tick{
-    stroke:gray;
-    stroke-width:1;
-}
-
-.bar-1 {
-    fill: steelblue;
-}
-
-.bar-1:hover {
-    fill: brown;
-}
-
-.axis--x path {
-    display: none;
-}
-
-#d3-pipe-container {
-    .arc text {
-        font: 10px sans-serif;
-        text-anchor: middle;
-    }
-
-    .arc path {
-        stroke: #fff;
-    }
-}
+// 暂时关闭d3的样式
+//#d3-container, #d3-bar-container {
+//    .bar {
+//        display: inline-block;
+//        width: 20px;
+//        margin-right: 2px;
+//        background-color: teal;
+//}
+//
+//    .axis path, .axis line{
+//        fill: none;
+//        stroke: black;
+//        shape-rendering: crispEdges;
+//    }
+//
+//    .axis text {
+//        font-family: sans-serif;
+//        font-size: 11px;
+//    }
+//}
+//
+//#container{
+//    background: #ddd;
+//    width: 500px;
+//    height: 250px;
+//}
+//
+//path {
+//    fill:none;
+//    stroke:steelblue;
+//    stroke-width:3;
+//}
+//
+//text {
+//    fill:black;
+//}
+//
+//.domain,.tick{
+//    stroke:gray;
+//    stroke-width:1;
+//}
+//
+//.bar-1 {
+//    fill: steelblue;
+//}
+//
+//.bar-1:hover {
+//    fill: brown;
+//}
+//
+//.axis--x path {
+//    display: none;
+//}
+//
+//#d3-pipe-container {
+//    .arc text {
+//        font: 10px sans-serif;
+//        text-anchor: middle;
+//    }
+//
+//    .arc path {
+//        stroke: #fff;
+//    }
+//}
 
 
 /**
@@ -79,7 +79,7 @@ text {
 }
 .jsp-target-container {
     position: relative;
-    width: 300px;
+    width: 800px;
     height: 600px;
     border: 1px solid black;
     float: left;
