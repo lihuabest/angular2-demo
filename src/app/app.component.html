@@ -1,4 +1,12 @@
-<router-outlet></router-outlet>
+<div>
+    <nav>
+        <a routerLink="/login" routerLinkActive="active">Login</a>
+        <a routerLink="/main" routerLinkActive="active">Main</a>
+    </nav>
+    <div [@routeAnimation]="getState(o)">
+        <router-outlet #o="outlet"></router-outlet>
+    </div>
+</div>
 
 <!--基础组件放到这里-->
 <app-ui-confirm-dialog></app-ui-confirm-dialog>

@@ -16,32 +16,37 @@ export const routes: Routes = [
     }, {
         path: 'login',
         component: LoginComponent,
-        pathMatch: 'full'
-    },
-    {
+        pathMatch: 'full',
+        data: {
+            state: 'login'
+        }
+    }, {
         path: 'main',
         component: MainComponent,
         // 路由可否被激活
         canActivate: [MainGuard],
-        children: [
-            {
-                path: '',
-                redirectTo: 'form',
-                pathMatch: 'full'
-            }, {
-                path: 'form',
-                loadChildren: 'app/module/form/form.module#FormModule',
-            }, {
-                path: 'dynamic',
-                loadChildren: 'app/module/dynamic/dynamic.module#DynamicModule',
-            }, {
-                path: 'canvas',
-                loadChildren: 'app/module/canvas/canvas.module#CanvasModule',
-            }, {
-                path: 'handsontable',
-                loadChildren: 'app/module/handsontable/handsontable.module#HandsontableModule',
-            }
-        ]
+        data: {
+            state: 'login'
+        },
+        // children: [
+        //     {
+        //         path: '',
+        //         redirectTo: 'form',
+        //         pathMatch: 'full'
+        //     }, {
+        //         path: 'form',
+        //         loadChildren: 'app/module/form/form.module#FormModule',
+        //     }, {
+        //         path: 'dynamic',
+        //         loadChildren: 'app/module/dynamic/dynamic.module#DynamicModule',
+        //     }, {
+        //         path: 'canvas',
+        //         loadChildren: 'app/module/canvas/canvas.module#CanvasModule',
+        //     }, {
+        //         path: 'handsontable',
+        //         loadChildren: 'app/module/handsontable/handsontable.module#HandsontableModule',
+        //     }
+        // ]
     }
 ];
 
