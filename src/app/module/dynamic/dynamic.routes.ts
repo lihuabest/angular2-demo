@@ -8,6 +8,7 @@ import {AppDynamicViewComponent} from "./components/view/dynamic.view.component"
 import {AppDynamicDragulaComponent} from "./components/dragula/dynamic.dragula.component";
 import {AppDynamicTreeComponent} from "./components/tree/dynamic.tree.component";
 import {DynamicViewDeactivateGuard} from "./components/view/dynamic.view.deactivate.guard";
+import {AppDynamicTabComponent} from "./components/tab/dynamic.tab.component";
 
 const DynamicRoutes: Routes = [
     {
@@ -28,6 +29,10 @@ const DynamicRoutes: Routes = [
     {
         path: 'tree',
         component: AppDynamicTreeComponent
+    },
+    {
+        path: 'tab',
+        component: AppDynamicTabComponent
     }
 ];
 

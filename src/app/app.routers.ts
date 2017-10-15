@@ -28,25 +28,25 @@ export const routes: Routes = [
         data: {
             state: 'login'
         },
-        // children: [
-        //     {
-        //         path: '',
-        //         redirectTo: 'form',
-        //         pathMatch: 'full'
-        //     }, {
-        //         path: 'form',
-        //         loadChildren: 'app/module/form/form.module#FormModule',
-        //     }, {
-        //         path: 'dynamic',
-        //         loadChildren: 'app/module/dynamic/dynamic.module#DynamicModule',
-        //     }, {
-        //         path: 'canvas',
-        //         loadChildren: 'app/module/canvas/canvas.module#CanvasModule',
-        //     }, {
-        //         path: 'handsontable',
-        //         loadChildren: 'app/module/handsontable/handsontable.module#HandsontableModule',
-        //     }
-        // ]
+        children: [
+            {
+                path: '',
+                redirectTo: 'form',
+                pathMatch: 'full'
+            }, {
+                path: 'form',
+                loadChildren: 'app/module/form/form.module#FormModule',
+            }, {
+                path: 'dynamic',
+                loadChildren: 'app/module/dynamic/dynamic.module#DynamicModule',
+            }, {
+                path: 'canvas',
+                loadChildren: 'app/module/canvas/canvas.module#CanvasModule',
+            }, {
+                path: 'handsontable',
+                loadChildren: 'app/module/handsontable/handsontable.module#HandsontableModule',
+            }
+        ]
     }
 ];
 

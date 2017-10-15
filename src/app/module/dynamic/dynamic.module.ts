@@ -14,6 +14,7 @@ import {RouterModule} from "@angular/router";
 import {NgShowDirective} from "../../directives/ng.show.directive";
 import {AppDynamicTransclusionComponent} from "./components/transclusion/dynamic.transclusion.component";
 import {AppTreeRootComponent} from "./components/tree/root/tree.root.component";
+import {AppDynamicTabComponent} from "./components/tab/dynamic.tab.component";
 /**
  * Created by Administrator on 2017/6/6.
  */
@@ -32,6 +33,7 @@ import {AppTreeRootComponent} from "./components/tree/root/tree.root.component";
         AppDynamicDragulaComponent,
         AppDynamicTransclusionComponent,
         AppDynamicTreeComponent,
+        AppDynamicTabComponent,
         NgShowDirective,
         AppTreeRootComponent
     ],
