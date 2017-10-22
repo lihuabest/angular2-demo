@@ -134,3 +134,21 @@
     right: 25px;
     z-index: 100;
 }
+
+.drag-table {
+    position: absolute;
+    text-align: center;
+    border: 1px solid #999;
+    cursor: pointer;
+    width: 116px;
+    span {
+        display: inline-block;
+        padding: 5px 30px;
+        text-align: center;
+        float: left;
+        border-top: 1px solid #999;
+        &:first-child {
+            border-top: 0;
+        }
+    }
+}

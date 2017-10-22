@@ -37,3 +37,20 @@
     <div>im out transclusion</div>
     <div class="header">header</div>
 </app-dynamic-transclusion-component>
+
+<h2>Dynamic Component Group</h2>
+<button (click)="addComponentClick('sky')">Add Sky</button>
+<button (click)="addComponentClick('ocean')">Add Ocean</button>
+<div>
+    <div class="tabs clearfix">
+        <div class="tab" *ngFor="let d of dynamicComponents;let i = index">
+            <span (click)="toggleShowDynamicComponent(d, i)">{{d.type}}</span>
+            <span (click)="removeDynamicComponent(d, i)">x</span>
+        </div>
+    </div>
+    <div class="content">
+        <div *ngFor="let d of dynamicComponents; let i = index;" [class.hidden]="!d.checked">
+            <div #div></div>
+        </div>
+    </div>
+</div>

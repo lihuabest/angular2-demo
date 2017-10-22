@@ -2,7 +2,10 @@
  * Created by Administrator on 2017/6/6.
  */
 
-import {Component, ComponentFactoryResolver, OnDestroy, ViewChild, ViewContainerRef} from "@angular/core";
+import {
+    AfterViewInit, Component, ComponentFactoryResolver, OnDestroy, QueryList, ViewChild, ViewChildren,
+    ViewContainerRef
+} from "@angular/core";
 import {DynamicTypeService} from "../../../../services/dynamic.type.service";
 import {UiService} from "../../../../services/ui/ui.service";
 import {ModalOptions, ModalService} from "../../../../services/modal/modal.module";
@@ -45,6 +48,9 @@ export class AppDynamicViewComponent implements OnDestroy {
     isShowAnimate: boolean = true;
 
     isShowDirective: boolean = true;
+
+    dynamicComponents = [];
+    @ViewChildren('div', {read: ViewContainerRef}) divs: QueryList<ViewContainerRef>;
 
     constructor(
         private dynamicTypeService: DynamicTypeService,
@@ -110,6 +116,48 @@ export class AppDynamicViewComponent implements OnDestroy {
         };
 
         $event.preventDefault();
+    }
+
+    /**
+     * add component click
+     */
+    addComponentClick(type: string) {
+        let component = {
+            type: type,
+            instance: null,
+            host: null,
+            checked: true
+        };
+
+        this.dynamicComponents.push(component);
+
+        setTimeout(() => {
+            let last = this.divs.last;
+            const dynamicTypeComponent = this.dynamicTypeService.getType(type);
+            const componentFactory = this.componentFactoryResolver.resolveComponentFactory(dynamicTypeComponent);
+            this.dynamicComponents[this.divs.length - 1].instance = last.createComponent(componentFactory).instance; // 子组件引用可以直接调用子组件方法
+            this.dynamicComponents[this.divs.length - 1].host = last;
+
+            this.toggleShowDynamicComponent(component);
+        });
+    }
+
+    /**
+     * toggle show component
+     */
+    toggleShowDynamicComponent(component: any, index?: number) {
+        this.dynamicComponents.forEach(c => {
+            c.checked = false;
+        });
+        component.checked = true;
+    }
+
+    /**
+     * remove component
+     */
+    removeDynamicComponent(component: any, index?: number) {
+        component.host.clear();
+        this.dynamicComponents.splice(index, 1);
     }
 
 }

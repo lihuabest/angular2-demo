@@ -1,7 +1,7 @@
 /**
  * Created by LIHUA on 2017/8/16.
  */
-import {AfterContentInit, Component} from "@angular/core";
+import {AfterContentInit, Component, ElementRef, Renderer2, ViewChild} from "@angular/core";
 
 /**
  * https://community.jsplumbtoolkit.com/doc/home.html 社区版api
@@ -16,17 +16,21 @@ declare var jsPlumb: any;
 export class AppCanvasJsplumbComponent implements AfterContentInit {
 
     ins: any;
-
     drapPos: any;
 
-    constructor() {
+    tableIndex = 1;
+
+    @ViewChild('targetContainer') targetContainer: ElementRef;
+
+    constructor(private render: Renderer2) {
 
     }
 
     ngAfterContentInit() {
         // let items = document.querySelectorAll('.item');
-
+        console.log(this.targetContainer.nativeElement);
         jsPlumb.importDefaults({
+            Container: this.targetContainer.nativeElement,
             Connector : [ "Bezier", { curviness: 150 } ],
             Anchors : [ "TopCenter", "BottomCenter" ],
             Overlays: [
@@ -54,6 +58,10 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
                         _this.createItem(event);
                     }
                 }
+            });
+
+            _this.ins.bind('connection', (data) => {
+                console.log(data);
             });
 
         });
@@ -153,5 +161,47 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
             y += element.offsetTop;
         }
         return {x, y}
+    }
+
+    addNewTable() {
+        let container = this.targetContainer.nativeElement;
+
+        let div = document.createElement('div');
+        div.classList.add('drag-table');
+        div.appendChild(this.addTableTitleSpan(div));
+
+        this.ins.draggable(div, {
+            containment: container,
+            drag: (e) => {}
+        });
+
+        container.appendChild(div);
+    }
+
+    addTableTitleSpan(parent: any) {
+        let span = document.createElement('span');
+        span.innerHTML = 'table-' + this.tableIndex;
+        this.tableIndex++;
+
+        this.render.listen(span, 'click', (e) => {
+            this.addTableRowSpan(parent);
+        });
+
+        return span;
+    }
+
+    addTableRowSpan(parent: any) {
+        let span = document.createElement('span');
+        span.innerHTML = 'inner';
+
+        parent.appendChild(span);
+
+        this.ins.makeTarget(span, {
+            anchor: ['Continuous', {faces: ['left', 'right']}]
+        });
+
+        this.ins.makeSource(span, {
+            anchor: ['Continuous', {faces: ['left', 'right']}]
+        });
     }
 }
