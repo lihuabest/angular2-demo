@@ -7,15 +7,19 @@ import {FormsModule} from "@angular/forms";
 import {AppFormComponent} from "./components/form.component";
 import {FormRoutesModule} from "./form.routes";
 import {ButtonModule} from "primeng/primeng";
+import {FormUploadComponent} from "./components/upload/form.upload.component";
+import {FileUploadModule} from "ng2-file-upload";
 
 @NgModule({
     imports: [
         FormsModule,
         FormRoutesModule,
-        ButtonModule
+        ButtonModule,
+        FileUploadModule
     ],
     declarations: [
-        AppFormComponent
+        AppFormComponent,
+        FormUploadComponent
     ],
     providers: [
 

@@ -5,11 +5,16 @@ import {RouterModule, Routes} from "@angular/router";
 
 import {AppFormComponent} from './components/form.component';
 import {NgModule} from "@angular/core";
+import {FormUploadComponent} from "./components/upload/form.upload.component";
 
 const FormRoutes: Routes = [
   {
     path: '',
     component: AppFormComponent
+  },
+  {
+    path: 'upload',
+    component: FormUploadComponent
   }
 ];
 

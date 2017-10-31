@@ -15,4 +15,13 @@ export class DataTransferService {
     chartDrop: Subject<string> = new Subject<string>();
     chartDropData: Subject<ChartModel> = new Subject<ChartModel>();
 
+    number = 0;
+    updateNumberSubject: Subject<number> = new Subject();
+
+
+    updateNumber(n: number) {
+        this.number = n;
+        this.updateNumberSubject.next(this.number);
+    }
+
 }

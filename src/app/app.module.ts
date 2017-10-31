@@ -40,7 +40,7 @@ import {RequestService} from "./plugins/request.service";
         LoginModule,
         MainModule,
         MdDialogModule,
-        ModalModule,
+        ModalModule
     ],
     providers: [
         UiService,
