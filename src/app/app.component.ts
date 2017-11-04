@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {routeAnimation} from "./animations";
 import {Router, NavigationEnd} from "@angular/router";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
+    styleUrls: ['./app.component.scss'],
     animations: [routeAnimation]
 })
 export class AppComponent {
@@ -13,7 +13,14 @@ export class AppComponent {
     routerState: boolean = true;
     routerStateCode: string = 'active';
 
-    constructor(private router: Router) {
+
+    // media query
+    private SMALL_WIDTH_BREAKPOINT = 840;
+    private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${this.SMALL_WIDTH_BREAKPOINT}px)`);
+    private isSmall = this.mediaMatcher.matches;
+
+    constructor(private router: Router,
+                private zone: NgZone) {
         // this.router.events.subscribe(event => {
         //     if (event instanceof NavigationEnd) {
         //         // 每次路由跳转改变状态
@@ -21,7 +28,18 @@ export class AppComponent {
         //         this.routerStateCode = this.routerState ? 'active' : 'inactive';
         //     }
         // });
+        
+        this.mediaMatcher.addListener(mql => {
+            this.isScreenSmall();
+            zone.run(() => this.mediaMatcher = mql)
+        });
     }
+
+    isScreenSmall(): boolean {
+        this.isSmall = this.mediaMatcher.matches;
+        return this.mediaMatcher.matches;
+    }
+
 
     getState(outlet) {
         return outlet.activatedRouteData.state;
