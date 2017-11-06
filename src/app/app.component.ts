@@ -6,7 +6,15 @@ import {Router, NavigationEnd} from "@angular/router";
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    animations: [routeAnimation]
+    animations: [routeAnimation],
+    styles: [`
+        @media only screen and (min-width: 840px) {
+            .layout {
+                background: #999 !important;
+            }
+        }
+        .layout { background: #666; }
+    `]
 })
 export class AppComponent {
     // router跳转动画所需参数
@@ -28,11 +36,11 @@ export class AppComponent {
         //         this.routerStateCode = this.routerState ? 'active' : 'inactive';
         //     }
         // });
-        
-        this.mediaMatcher.addListener(mql => {
-            this.isScreenSmall();
-            zone.run(() => this.mediaMatcher = mql)
-        });
+
+        // this.mediaMatcher.addListener(mql => {
+        //     this.isScreenSmall();
+        //     zone.run(() => this.mediaMatcher = mql)
+        // });
     }
 
     isScreenSmall(): boolean {
