@@ -16,6 +16,9 @@ import {MdDialogModule} from "@angular/material";
 import {ModalModule} from "./services/modal/modal.module";
 import {LogService} from "./services/log.service";
 import {RequestService} from "./plugins/request.service";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {TokenInterceptor} from "./interceptor/token.interceptor";
+import {ResponseInterceptor} from "./interceptor/response.interceptor";
 
 /**
  NgModule的主要属性如下：
@@ -36,6 +39,7 @@ import {RequestService} from "./plugins/request.service";
         BrowserAnimationsModule,
         FormsModule,
         HttpModule,
+        HttpClientModule,
         AppRoutesModule,
         LoginModule,
         MainModule,
@@ -46,7 +50,17 @@ import {RequestService} from "./plugins/request.service";
         UiService,
         DataTransferService,
         LogService,
-        RequestService
+        RequestService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ResponseInterceptor,
+            multi: true
+        }
     ],
     bootstrap: [
         AppComponent,
