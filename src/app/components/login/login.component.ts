@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
-import {MdDialog} from "@angular/material";
-import {RequestService} from "../../plugins/request.service";
-import {error} from "selenium-webdriver";
 /**
  * Created by Administrator on 2017/4/13.
  */
+
+import {Component} from '@angular/core';
+import {RequestService} from "../../plugins/request.service";
+
 
 @Component({
     selector: 'app-login-component',
@@ -41,5 +41,16 @@ export class LoginComponent {
 
         let data = await this.requestService.getByHttpClientPromise('/api/tsconfig.app.json');
         console.log(data);
+    }
+
+    httpClienPostClick() {
+        this.requestService.postByHttpClient('/api/xx', {
+            query: true,
+            number: 1
+        }).subscribe(data => {
+            console.log(data);
+        }, err => {
+            console.log(err);
+        });
     }
 }

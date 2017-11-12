@@ -10,7 +10,7 @@ import {DynamicTypeService} from "../../../../services/dynamic.type.service";
 import {UiService} from "../../../../services/ui/ui.service";
 import {ModalOptions, ModalService} from "../../../../services/modal/modal.module";
 import {AppDialogComponent} from "../../../../services/dialog/dialog.component";
-import {MdDialog} from "@angular/material";
+// import {MdDialog} from "@angular/material";
 import {
     trigger,
     state,
@@ -56,7 +56,7 @@ export class AppDynamicViewComponent implements OnDestroy {
         private dynamicTypeService: DynamicTypeService,
         private componentFactoryResolver: ComponentFactoryResolver,
         private uiService: UiService,
-        private mdDialog: MdDialog,
+        // private mdDialog: MdDialog,
         private modalService: ModalService
     ) {}
 
@@ -91,13 +91,13 @@ export class AppDynamicViewComponent implements OnDestroy {
 
     // Angular Material Dialog
     showMdDialog($event: any) {
-        let ref = this.mdDialog.open(AppDialogComponent);
-        let ins = ref.componentInstance;
-
-        ins.modalClick = () => {
-            console.log('md model click');
-            ref.close();
-        };
+        // let ref = this.mdDialog.open(AppDialogComponent);
+        // let ins = ref.componentInstance;
+        //
+        // ins.modalClick = () => {
+        //     console.log('md model click');
+        //     ref.close();
+        // };
     }
 
     // Customer Dialog

@@ -12,7 +12,7 @@ import {MainModule} from "./components/main/main.module";
 import {UiService} from "./services/ui/ui.service";
 import {UiConfirmDialogComponent} from "./services/ui/components/confirm/ui.confirm.dialog.component";
 import {DataTransferService} from "./services/data.transfer.service";
-import {MdDialogModule} from "@angular/material";
+// import {MdDialogModule} from "@angular/material";
 import {ModalModule} from "./services/modal/modal.module";
 import {LogService} from "./services/log.service";
 import {RequestService} from "./plugins/request.service";
@@ -43,7 +43,7 @@ import {ResponseInterceptor} from "./interceptor/response.interceptor";
         AppRoutesModule,
         LoginModule,
         MainModule,
-        MdDialogModule,
+        // MdDialogModule,
         ModalModule
     ],
     providers: [

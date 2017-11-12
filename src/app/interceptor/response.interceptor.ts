@@ -15,6 +15,6 @@ export class ResponseInterceptor implements HttpInterceptor {
             }
         }, (err: any) => {
             console.log(err);
-        })
+        });
     }
 }
