@@ -2,6 +2,8 @@
  * Created by LIHUA on 2017/8/16.
  */
 import {AfterContentInit, Component, ElementRef, Renderer2, ViewChild} from "@angular/core";
+import {ConnectOptions, JsplumbTool} from "../../../../plugins/jsplumb.tool";
+import {leave} from "@angular/core/src/profile/wtf_impl";
 
 /**
  * https://community.jsplumbtoolkit.com/doc/home.html 社区版api
@@ -31,12 +33,13 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
         console.log(this.targetContainer.nativeElement);
         jsPlumb.importDefaults({
             Container: this.targetContainer.nativeElement,
-            Connector : [ "Bezier", { curviness: 150 } ],
-            Anchors : [ "TopCenter", "BottomCenter" ],
-            Overlays: [
-                [ "Arrow", {width: 10, length: 10, location: 1} ]
-            ],
-            HoverPaintStyle: { stroke: "orange" }
+            EndpointStyle: {radius: 3, fill: '#108EE9', stroke: '#CCDDEE', strokeWidth: 2},
+            PaintStyle: {strokeWidth: 0.5, stroke: '#108ee9', outlineStroke: 'transparent', outlineWidth: 5},
+            Connector: [ 'Bezier', { curviness: 65 } ],
+            HoverPaintStyle: { stroke: 'orange' },
+            ConnectionOverlays: [                                                   // 连接箭头
+                ['Arrow', {width: 6, length: 6, location: 0.5}]
+            ]
         });
 
         const _this = this;
@@ -62,6 +65,24 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
 
             _this.ins.bind('connection', (data) => {
                 console.log(data);
+                if (data.source === data.target) {
+                    _this.ins.deleteConnection(data.connection);
+                    return;
+                }
+
+                if (data.connection.scope !== 'auto') {
+                    let op = JsplumbTool.getConnectOptions({
+                        source: data.source,
+                        target: data.target,
+                        anchors: ['RightMiddle', 'LeftMiddle'],
+                        scope: 'auto'
+                    } as ConnectOptions);
+                    _this.ins.connect(op);
+
+                    setTimeout(() => {
+                        _this.ins.deleteConnection(data.connection);
+                    });
+                }
             });
 
         });
@@ -72,12 +93,22 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
         let div = document.createElement('div');
         div.classList.add('jsp-item');
         div.innerHTML = event.drag.el.innerHTML;
+        div.style.backgroundColor = 'transparent';
+        div.style.border = '0';
 
         let parentPosition = this.getAbsPoint(container);
         let x = this.drapPos[0] - parentPosition.x;
         let y = this.drapPos[1] - parentPosition.y;
         div.style.left = x + 'px';
         div.style.top = y + 'px';
+
+        let header = document.createElement('div');
+        header.classList.add('jsp-item-header');
+        div.appendChild(header);
+
+        let inner = document.createElement('div');
+        inner.classList.add('jsp-item-inner');
+        div.appendChild(inner);
 
         container.appendChild(div);
 
@@ -86,9 +117,14 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
             containment: container
         });
 
-        this.ins.addEndpoint(div, this.getEndPoint().firstPoint);
+        // this.ins.addEndpoint(div, this.getEndPoint().firstPoint);
 
-        console.log(event)
+        this.ins.makeSource(inner, {
+            anchor: ['Continuous', { faces: ['left', 'right'] } ]
+        });
+        this.ins.makeTarget(inner, {
+            anchor: ['Continuous', { faces: ['left', 'right'] } ],
+        });
     }
 
     getEndPoint() {
@@ -160,7 +196,7 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
             x += element.offsetLeft;
             y += element.offsetTop;
         }
-        return {x, y}
+        return {x, y};
     }
 
     addNewTable() {
@@ -203,5 +239,9 @@ export class AppCanvasJsplumbComponent implements AfterContentInit {
         this.ins.makeSource(span, {
             anchor: ['Continuous', {faces: ['left', 'right']}]
         });
+    }
+
+    connectClick() {
+
     }
 }

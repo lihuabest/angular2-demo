@@ -89,7 +89,7 @@
     border: 1px solid black;
     background-color: #ddddff;
     width: 100px;
-    height: 100px;
+    height: 40px;
     position: absolute;
     &#state1 {
         left: 10px;
@@ -102,5 +102,19 @@
     &#state3 {
         left: 10px;
         top: 230px
+    }
+    .jsp-item-inner {
+        width: 100%;
+        height: 100%;
+        background: pink;
+        position: absolute;
+        top: 0;
+    }
+    .jsp-item-header {
+        width: 100%;
+        height: 25%;
+        background: grey;
+        position: absolute;
+        top: -10px;
     }
 }
